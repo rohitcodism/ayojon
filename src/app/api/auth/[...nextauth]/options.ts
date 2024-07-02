@@ -3,6 +3,7 @@ import  CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/models/user.model';
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions : NextAuthOptions = {
     providers : [
@@ -52,6 +53,10 @@ export const authOptions : NextAuthOptions = {
                     throw new Error(error);
                 }
             }
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID || "",
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
         })
     ]
 }
