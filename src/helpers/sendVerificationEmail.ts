@@ -27,6 +27,9 @@ export async function sendVerificationEmail(
                 {
                     success: true,
                     message: `Email sent successfully to ${email}`
+                },
+                {
+                    status: 200
                 }
             )
         }
