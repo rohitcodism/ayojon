@@ -22,6 +22,8 @@ export async function sendVerificationEmail(
             }
         )
 
+        console.log(result);
+
         if(result.data){
             return NextResponse.json(
                 {
