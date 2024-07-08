@@ -58,5 +58,31 @@ export const authOptions : NextAuthOptions = {
             clientId: process.env.GOOGLE_CLIENT_ID || "",
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
         })
-    ]
+    ],
+    callbacks: {
+        async jwt({ token, user }){
+            if(user){
+                token._id = user._id?.toString();
+                token.username = user.username;
+            }
+            return token;
+        },
+        async session({session, token}) {
+            
+            if(token){
+                session.user._id = token._id;
+                session.user.username = token.username;
+                session.user.isVerified = token.isVerified;
+            }
+
+            return session;
+        },
+    },
+    pages: {
+        signIn: "signin"
+    },
+    session: {
+        strategy: 'jwt'
+    },
+    secret: process.env.NEXTAUTH_SECRET
 }
