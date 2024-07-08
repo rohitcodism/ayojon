@@ -1,14 +1,9 @@
-//TODO: Yet to add the process to upload add user profile picture to the DB
-
 import { generateOtp } from "@/helpers/generateOtp";
 import { hashPassword } from "@/helpers/hashPassword";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
-import { upload } from "@/lib/multer";
 import Cloudinary from "@/lib/cloudinary";
-import fs from "fs";
-import runMiddleware from "@/helpers/runMiddleWare";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = 'nodejs'
@@ -30,7 +25,7 @@ export async function POST(req: NextRequest, res:NextResponse) {
 
         let profilePictureUrl = "";
 
-        if(profilePicture){
+        if(profilePicture?.size){
             const bytes  = await profilePicture.arrayBuffer();
             const buffer = Buffer.from(bytes);
 
