@@ -40,6 +40,18 @@ export async function POST(req: NextRequest){
             )
         }
 
+        if(user.isVerified){
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "User is already verified!!"
+                },
+                {
+                    status: 400
+                }
+            )
+        }
+
         const isCorrectOTP = otp === user.verifyCode;
 
         const isValidOTP = new Date(Date.now()) < user.verifyCodeExpiry
