@@ -14,7 +14,7 @@ export interface Event extends Document {
 const eventSchema: Schema<Event> = new Schema({
     title: {
         type: String,
-        required: [true, "Title was required!!"]
+        required: [true, "Title was required!!"],
     },
     description: {
         type: String,
