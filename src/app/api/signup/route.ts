@@ -16,8 +16,6 @@ export async function POST(req: NextRequest, res:NextResponse) {
     try {
         const formData = await req.formData();
 
-        console.log("Formdata : ", formData);
-
         const username = formData.get('username') as string
         const email = formData.get('email') as string
         const password = formData.get('password') as string
