@@ -5,26 +5,28 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
 import Cloudinary from "@/lib/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
+import formidable from "formidable";
+import { IncomingMessage } from "http";
 
-export const runtime = 'nodejs'
 
-
-export async function POST(req: NextRequest, res:NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
 
     await dbConnect();
 
     try {
-        const formData = await req.formData();
+        const formData = await req.formData()
 
         const username = formData.get('username') as string
         const email = formData.get('email') as string
         const password = formData.get('password') as string
-        const profilePicture = formData.get('profilePicture') as File | null
+        const profilePicture = formData.get('profilePicture') as File | undefined
+
+        console.log(profilePicture);
 
         let profilePictureUrl = "";
 
-        if(profilePicture?.size){
-            const bytes  = await profilePicture.arrayBuffer();
+        if ((profilePicture?.size !== 0) && (profilePicture !== undefined) && (profilePicture !== null)) {
+            const bytes = await profilePicture.arrayBuffer();
             const buffer = Buffer.from(bytes);
 
             const result = await new Promise((resolve, reject) => {
@@ -34,7 +36,7 @@ export async function POST(req: NextRequest, res:NextResponse) {
                         resource_type: "image",
                     },
                     (error, result) => {
-                        if(error){
+                        if (error) {
                             reject(error);
                         }
                         resolve(result);
@@ -42,7 +44,7 @@ export async function POST(req: NextRequest, res:NextResponse) {
                 ).end(buffer);
             })
 
-            profilePictureUrl = ( result as any).secure_url;
+            profilePictureUrl = (result as any).secure_url;
         }
 
         const existingUserWithVerifiedUsername = await UserModel.findOne({
@@ -144,6 +146,7 @@ export async function POST(req: NextRequest, res:NextResponse) {
             }
         )
     } catch (error: any) {
+        console.log("Sign up error: ", error)
         return NextResponse.json(
             {
                 success: false,
