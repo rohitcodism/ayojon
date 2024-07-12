@@ -87,7 +87,7 @@ export async function POST(req: NextRequest, {params}: {params: {userId: string}
 
             user.password = hashedPassword;
 
-            const updatedUser = await user.save();
+            await user.save();
     
             return NextResponse.json(
                 {
