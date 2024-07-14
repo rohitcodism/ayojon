@@ -35,7 +35,7 @@ async function createBooking(req: NextRequest) {
             );
         }
 
-        // Create booking
+        
         const newBooking = new bookingModel({
             userId,
             eventId,
