@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
 import Link from "next/link";
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
+import GoogleIcon from "../../../../public/assets/icons8-google.svg"
 
 
 
@@ -80,11 +82,11 @@ const SignUp = () => {
             formData.append("email", data.email)
             formData.append("password", data.password);
 
-            if(data.profilePicture != undefined){
+            if (data.profilePicture != undefined) {
                 formData.append("profilePicture", data.profilePicture)
             }
 
-            console.log("formData: ",formData)
+            console.log("formData: ", formData)
 
 
             const res = await axios.post(`/api/signup`, formData,
@@ -145,7 +147,7 @@ const SignUp = () => {
                             mb-4
                         '
                     >
-                        Sign up to start anonymous adventure
+                        Sign up
                     </p>
                 </div>
                 <Form {...form}>
@@ -216,55 +218,63 @@ const SignUp = () => {
                                     <FormLabel>Choose a profile picture</FormLabel>
                                     <FormControl>
                                         <Input
-                                        type="file" 
-                                        placeholder="give it a good look"
-                                        accept="image/*"
-                                        className="cursor-pointer"
-                                        onChange={(e) => {
-                                            const file = e.target.files ? e.target.files[0] : null
-                                            
-                                            field.onChange(file)
-                                        }} onBlur={field.onBlur} ref={field.ref} />
+                                            type="file"
+                                            placeholder="give it a good look"
+                                            accept="image/*"
+                                            className="cursor-pointer"
+                                            onChange={(e) => {
+                                                const file = e.target.files ? e.target.files[0] : null
+
+                                                field.onChange(file)
+                                            }} onBlur={field.onBlur} ref={field.ref} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <div
-                            className="
-                            w-full
+                        <Button
+                            type="submit"
+                            size={"lg"}
+                            className="self-center w-full cursor-pointer"
+                        >
+                            {
+                                isSubmitting ? <Loader2 className="animate-spin" /> : "Sign up"
+                            }
+                        </Button>
+                    </form>
+                    <div
+                        className="
                             flex
                             flex-col
-                            gap-2
                             justify-center
                             items-center
-                            py-4
+                            py-2
+                            gap-2
                         "
+                    >
+                        <Button
+                            size={"lg"}
+                            className="self-center w-full cursor-pointer"
+                            onClick={() => signIn("google")}
                         >
-                            <Button
-                                type="submit"
-                                size={"lg"}
-                                className="self-center w-full"
-                            >
-                                {
-                                    isSubmitting ? <Loader2 className="animate-spin" /> : "Sign up"
-                                }
-                            </Button>
-                            <Link
-                                href={"/signin"}
-                            >
-                                <p
-                                    className="
+                            {
+                                isSubmitting ? (<Loader2 className="animate-spin" />) : (<>Sign up with Google</>)
+                            }
+                        </Button>
+                        <Link
+                            href={"/login"}
+                        >
+                            <p
+                                className="
                                     hover:text-black
                                     text-gray-600
                                     text-decoration-line: underline
                                 "
-                                >
-                                    Already a member ?
-                                </p>
-                            </Link>
-                        </div>
-                    </form>
+                            >
+                                Already a member ?
+                            </p>
+                        </Link>
+                    </div>
                 </Form>
             </div>
         </div>
