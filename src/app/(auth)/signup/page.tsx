@@ -1,35 +1,32 @@
-"use client"
+"use client";
 
-import { signUpSchema } from "@/schemas/signup.schema"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { useDebounceCallback } from "usehooks-ts"
+import { signUpSchema } from "@/schemas/signup.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { useDebounceCallback } from "usehooks-ts";
 import axios, { AxiosError } from "axios";
-import { NextResponse } from "next/server"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Loader2 } from "lucide-react"
+import { NextResponse } from "next/server";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation"
-import { signIn } from "next-auth/react"
-import GoogleIcon from "../../../../public/assets/icons8-google.svg"
-
-
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import GoogleIcon from "../../../../public/assets/icons8-google.svg";
 
 const SignUp = () => {
+    const router = useRouter();
 
-    const router = useRouter()
+    const [username, setUsername] = useState("");
 
-    const [username, setUsername] = useState("")
+    const [usernameMessage, setUsernameMessage] = useState("");
 
-    const [usernameMessage, setUsernameMessage] = useState("")
+    const [isCheckingUsername, setIsCheckingUsername] = useState(false);
 
-    const [isCheckingUsername, setIsCheckingUsername] = useState(false)
-
-    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const debounced = useDebounceCallback(setUsername, 500);
 
@@ -41,114 +38,73 @@ const SignUp = () => {
             email: "",
             password: "",
             confirmPassword: "",
-            profilePicture: undefined
+            profilePicture: undefined,
         },
-    })
+    });
 
     useEffect(() => {
         const checkingUsername = async () => {
-            setIsCheckingUsername(true)
+            setIsCheckingUsername(true);
 
-            setUsernameMessage("")
+            setUsernameMessage("");
 
             try {
-                const res = await axios.get(`/api/uniquename/?username=${username}`)
+                const res = await axios.get(`/api/uniquename/?username=${username}`);
 
-                setUsernameMessage(res.data.message)
+                setUsernameMessage(res.data.message);
             } catch (error) {
-                const axiosError = error as AxiosError<NextResponse>
+                const axiosError = error as AxiosError<NextResponse>;
 
                 console.log("Unique username error: ", axiosError);
+            } finally {
+                setIsCheckingUsername(false);
             }
-            finally {
-                setIsCheckingUsername(false)
-            }
-        }
-        checkingUsername()
-    }, [username])
+        };
+        checkingUsername();
+    }, [username]);
 
     const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
-        setIsSubmitting(true)
+        setIsSubmitting(true);
 
-        console.log("Function submit called!!")
+        console.log("Function submit called!!");
 
         try {
-
-            console.log("Form data received: ", data)
+            console.log("Form data received: ", data);
 
             const formData = new FormData();
 
-            formData.append("username", data.username)
-            formData.append("email", data.email)
+            formData.append("username", data.username);
+            formData.append("email", data.email);
             formData.append("password", data.password);
 
             if (data.profilePicture != undefined) {
-                formData.append("profilePicture", data.profilePicture)
+                formData.append("profilePicture", data.profilePicture);
             }
 
-            console.log("formData: ", formData)
+            console.log("formData: ", formData);
 
-
-            const res = await axios.post(`/api/signup`, formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                }
-            );
+            const res = await axios.post(`/api/signup`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
 
             console.log("Response from Sign up API", res);
 
-            router.replace("/")
-
+            router.replace("/");
         } catch (error) {
-
             console.log("Error from signup API: ", error);
+        } finally {
+            setIsSubmitting(false);
         }
-        finally {
-            setIsSubmitting(false)
-        }
-    }
+    };
 
     return (
-        <div
-            className="flex flex-col justify-center items-center min-h-screen bg-gray-100 gap-8 py-8"
-        >
-            <div
-                className="
-                    w-full
-                    max-w-lg
-                    p-6
-                    pb-4
-                    space-y-2
-                    bg-white
-                    rounded-lg
-                    shadow-md
-                "
-            >
-                <div
-                    className='
-                        text-center
-                    '
-                >
-                    <h1
-                        className='
-                            text-4xl
-                            font-extrabold
-                            tracking-tight
-                            lg:text-5xl
-                            mb-6
-                        '
-                    >
-                        Ayojon
-                    </h1>
-                    <p
-                        className='
-                            mb-4
-                        '
-                    >
-                        Sign up
-                    </p>
+        <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 gap-8 py-8">
+            <div className="w-full max-w-lg p-6 pb-4 space-y-2 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+                <div className="text-center">
+                    <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-black dark:text-white">Ayojon</h1>
+                    <p className="mb-4 text-gray-600 dark:text-gray-300">Sign up</p>
                 </div>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -159,12 +115,18 @@ const SignUp = () => {
                                 <FormItem>
                                     <FormLabel>Username</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="what should we call you" {...field} onChange={(e) => { field.onChange(e); debounced(e.target.value) }} />
+                                        <Input
+                                            placeholder="what should we call you"
+                                            {...field}
+                                            onChange={(e) => {
+                                                field.onChange(e);
+                                                debounced(e.target.value);
+                                            }}
+                                            className="dark:bg-gray-700 dark:text-white"
+                                        />
                                     </FormControl>
                                     {isCheckingUsername && <Loader2 className="animate-spin" />}
-                                    <p
-                                        className={`text-sm ${usernameMessage === "Username is available!!" ? "text-green-500" : "text-red-500"} font-medium`}
-                                    >
+                                    <p className={`text-sm ${usernameMessage === "Username is available!!" ? "text-green-500" : "text-red-500"} font-medium`}>
                                         {usernameMessage}
                                     </p>
                                     <FormMessage />
@@ -178,7 +140,7 @@ const SignUp = () => {
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="example@coolmail.com" {...field} />
+                                        <Input placeholder="example@coolmail.com" {...field} className="dark:bg-gray-700 dark:text-white" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -191,7 +153,7 @@ const SignUp = () => {
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="keep it secret but mind it" {...field} />
+                                        <Input placeholder="keep it secret but mind it" {...field} className="dark:bg-gray-700 dark:text-white" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -204,7 +166,7 @@ const SignUp = () => {
                                 <FormItem>
                                     <FormLabel>Confirm password</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="kept it ?" {...field} />
+                                        <Input placeholder="kept it ?" {...field} className="dark:bg-gray-700 dark:text-white" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -221,64 +183,35 @@ const SignUp = () => {
                                             type="file"
                                             placeholder="give it a good look"
                                             accept="image/*"
-                                            className="cursor-pointer"
+                                            className="cursor-pointer dark:bg-gray-700 dark:text-white"
                                             onChange={(e) => {
-                                                const file = e.target.files ? e.target.files[0] : null
-
-                                                field.onChange(file)
-                                            }} onBlur={field.onBlur} ref={field.ref} />
+                                                const file = e.target.files ? e.target.files[0] : null;
+                                                field.onChange(file);
+                                            }}
+                                            onBlur={field.onBlur}
+                                            ref={field.ref}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button
-                            type="submit"
-                            size={"lg"}
-                            className="self-center w-full cursor-pointer"
-                        >
-                            {
-                                isSubmitting ? <Loader2 className="animate-spin" /> : "Sign up"
-                            }
+                        <Button type="submit" size={"lg"} className="self-center w-full cursor-pointer dark:bg-blue-600 dark:text-white">
+                            {isSubmitting ? <Loader2 className="animate-spin" /> : "Sign up"}
                         </Button>
                     </form>
-                    <div
-                        className="
-                            flex
-                            flex-col
-                            justify-center
-                            items-center
-                            py-2
-                            gap-2
-                        "
-                    >
-                        <Button
-                            size={"lg"}
-                            className="self-center w-full cursor-pointer"
-                            onClick={() => signIn("google")}
-                        >
-                            {
-                                isSubmitting ? (<Loader2 className="animate-spin" />) : (<>Sign up with Google</>)
-                            }
+                    <div className="flex flex-col justify-center items-center py-2 gap-2">
+                        <Button size={"lg"} className="self-center w-full cursor-pointer dark:bg-blue-600 dark:text-white" onClick={() => signIn("google")}>
+                            {isSubmitting ? <Loader2 className="animate-spin" /> : "Sign up with Google"}
                         </Button>
-                        <Link
-                            href={"/login"}
-                        >
-                            <p
-                                className="
-                                    hover:text-black
-                                    text-gray-600
-                                    text-decoration-line: underline
-                                "
-                            >
-                                Already a member ?
-                            </p>
+                        <Link href={"/login"}>
+                            <p className="hover:text-black text-gray-600 dark:text-gray-300 dark:hover:text-white underline">Already a member?</p>
                         </Link>
                     </div>
                 </Form>
             </div>
         </div>
     );
-}
+};
 
-export default SignUp
+export default SignUp;
