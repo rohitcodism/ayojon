@@ -1,15 +1,18 @@
 import Navbar from "@/components/ui/navbar";
 import { HeroLight } from "./components/HeroLight";
 import { ThemeProvider } from "@/components/theme-provider";
+import Events from "./components/Events";
+import { Community } from "./components/Community";
 
 
 
 export default function Home() {
   return (
-    <div className="flex flex-col dark:bg-black min-h-screen">
+    <div className="flex flex-col dark:bg-black min-h-screen gap-12 pb-8">
       <ThemeProvider>
-          <Navbar />
           <HeroLight />
+          <Events />
+          <Community />
       </ThemeProvider>
     </div>
   );
