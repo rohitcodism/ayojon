@@ -11,11 +11,12 @@ import { NextResponse } from "next/server";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
+import { Divide, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import GoogleIcon from "../../../../public/assets/icons8-google.svg";
+import Image from "next/image";
 
 const SignUp = () => {
     const router = useRouter();
@@ -100,7 +101,7 @@ const SignUp = () => {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 gap-8 py-8">
+        <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 dark:bg-black gap-8 py-8">
             <div className="w-full max-w-lg p-6 pb-4 space-y-2 bg-white dark:bg-gray-800 rounded-lg shadow-md">
                 <div className="text-center">
                     <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6 text-black dark:text-white">Ayojon</h1>
@@ -202,7 +203,7 @@ const SignUp = () => {
                     </form>
                     <div className="flex flex-col justify-center items-center py-2 gap-2">
                         <Button size={"lg"} className="self-center w-full cursor-pointer dark:bg-blue-600 dark:text-white" onClick={() => signIn("google")}>
-                            {isSubmitting ? <Loader2 className="animate-spin" /> : "Sign up with Google"}
+                            {isSubmitting ? <Loader2 className="animate-spin" /> : (<div className="flex justify-center items-center gap-4">Sign up with Google <Image src={GoogleIcon} alt="google-icon" height={20} width={20} /></div>)}
                         </Button>
                         <Link href={"/login"}>
                             <p className="hover:text-black text-gray-600 dark:text-gray-300 dark:hover:text-white underline">Already a member?</p>
