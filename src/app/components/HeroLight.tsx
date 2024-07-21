@@ -1,14 +1,11 @@
 import React from "react";
-import { cn } from "@/lib/utils";
 import { Spotlight } from "../../components/ui/Spotlight";
 import { Button } from "@/components/ui/button";
-import { LearnButton } from "./SpecialButton";
 import Link from "next/link";
 
 export function HeroLight() {
-
     return (
-        <div className="h-[40rem] w-full rounded-md flex md:items-center md:justify-center bg-white/[0.96] antialiased bg-grid-black/[0.02] relative overflow-hidden dark:bg-black/[0.96] dark:bg-grid-white/[0.02]">
+        <div className="h-[33rem] w-full rounded-md flex md:items-center md:justify-center bg-white/[0.96] antialiased bg-grid-black/[0.02] relative overflow-hidden dark:bg-black/[0.96] dark:bg-grid-white/[0.02]">
             <Spotlight
                 className="-top-40 left-0 md:left-60 md:-top-20"
                 fill="white"
@@ -22,20 +19,22 @@ export function HeroLight() {
                     Your Ultimate Event Management Solution
                 </p>
                 <div className="mt-8 flex justify-center gap-6">
-                    <Link
-                        href={"/signup"}
-                    >
-                        <Button className="dark:bg-white dark:text-black py-3 px-6 rounded-lg text-lg font-semibold shadow-md bg-black text-white">
-                            Get Started
-                        </Button>
+                    <Link href={"/signup"}>
+                        <div className="transition transform hover:scale-105 active:scale-95">
+                            <Button className="dark:bg-white dark:text-black py-3 px-6 rounded-lg text-lg font-semibold shadow-md bg-black text-white">
+                                Get Started
+                            </Button>
+                        </div>
                     </Link>
                     <Link href={"/about"}>
-                        <Button
-                            variant={"outline"}
-                            className="bg-transparent rounded-full dark:text-white py-4 px-6 text-lg font-semibold shadow-md text-black border-2 border-black hover:bg-gray-200"
-                        >
-                            Create event
-                        </Button>
+                        <div className="transition transform hover:scale-105 active:scale-95">
+                            <Button
+                                variant={"outline"}
+                                className="bg-transparent rounded-full dark:text-white py-4 px-6 text-lg font-semibold shadow-md text-black border-2 border-black hover:bg-gray-200 dark:border-white dark:hover:bg-gray-100/25"
+                            >
+                                Create Event
+                            </Button>
+                        </div>
                     </Link>
                 </div>
             </div>
