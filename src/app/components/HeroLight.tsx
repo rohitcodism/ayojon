@@ -1,7 +1,9 @@
+"use client"
 import React from "react";
 import { Spotlight } from "../../components/ui/Spotlight";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export function HeroLight() {
     return (
@@ -11,32 +13,56 @@ export function HeroLight() {
                 fill="white"
             />
             <div className="p-4 max-w-7xl mx-auto relative z-10 text-center">
-                <h1 className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b dark:from-white dark:to-gray-300 from-black to-gray-600 py-2">
+                <motion.h1
+                    className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b dark:from-white dark:to-gray-300 from-black to-gray-600 py-2"
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                >
                     Welcome to Ayojon
-                </h1>
+                </motion.h1>
 
-                <p className="mt-4 font-medium text-lg md:text-2xl dark:text-gray-200 max-w-2xl mx-auto text-gray-900">
+                <motion.p
+                    className="mt-4 font-medium text-lg md:text-2xl dark:text-gray-200 max-w-2xl mx-auto text-gray-900"
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
+                >
                     Your Ultimate Event Management Solution
-                </p>
-                <div className="mt-8 flex justify-center gap-6">
-                    <Link href={"/signup"}>
-                        <div className="transition transform hover:scale-105 active:scale-95">
+                </motion.p>
+
+                <motion.div 
+                    className="mt-8 flex justify-center gap-6"
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
+                >
+                    <Link href="/signup">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                        >
                             <Button className="dark:bg-white dark:text-black py-3 px-6 rounded-lg text-lg font-semibold shadow-md bg-black text-white">
                                 Get Started
                             </Button>
-                        </div>
+                        </motion.div>
                     </Link>
-                    <Link href={"/about"}>
-                        <div className="transition transform hover:scale-105 active:scale-95">
+                    <Link href="/about">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                        >
                             <Button
-                                variant={"outline"}
+                                variant="outline"
                                 className="bg-transparent rounded-full dark:text-white py-4 px-6 text-lg font-semibold shadow-md text-black border-2 border-black hover:bg-gray-200 dark:border-white dark:hover:bg-gray-100/25"
                             >
                                 Create Event
                             </Button>
-                        </div>
+                        </motion.div>
                     </Link>
-                </div>
+                </motion.div>
             </div>
         </div>
     );
