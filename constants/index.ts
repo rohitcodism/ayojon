@@ -1,3 +1,4 @@
+import { StaticImageData } from "next/image";
 import { musicEventImage, standUpImage, techEventImage, yogaImage } from "../public/assets";
 
 
@@ -24,6 +25,35 @@ const eventTypes = [
     }
 ]
 
+interface FeaturedEvent {
+    name: string;
+    image: StaticImageData;
+    date: string; // Using ISO 8601 format for date
+}
+
+const featuredEvents: FeaturedEvent[] = [
+    {
+        name: "Tech Conference 2024",
+        image: techEventImage,
+        date: "15 August"
+    },
+    {
+        name: "Summer Music Festival",
+        image: musicEventImage,
+        date: "22 July"
+    },
+    {
+        name: "Stand-Up Comedy Night",
+        image: standUpImage,
+        date: "5 September"
+    },
+    {
+        name: "Yoga Day Celebration",
+        image: yogaImage,
+        date: "10 October"
+    }
+]
+
 export {
-    eventTypes
+    eventTypes, featuredEvents
 }
