@@ -1,6 +1,5 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Image, { StaticImageData } from "next/image";
-import { musicEventImage } from "../../../public/assets";
 
 interface EventCardProps {
     title: string;
