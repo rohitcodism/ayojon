@@ -4,8 +4,13 @@ import { Spotlight } from "../../components/ui/Spotlight";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
+import { BackgroundBeams } from "@/components/ui/background-beams";
 
 export function HeroLight() {
+
+    const { theme } = useTheme();
+
     return (
         <div className="h-[33rem] w-full rounded-md flex md:items-center md:justify-center bg-white/[0.96] antialiased bg-grid-black/[0.02] relative overflow-hidden dark:bg-black/[0.96] dark:bg-grid-white/[0.02]">
             <Spotlight
@@ -31,7 +36,7 @@ export function HeroLight() {
                     Your Ultimate Event Management Solution
                 </motion.p>
 
-                <motion.div 
+                <motion.div
                     className="mt-8 flex justify-center gap-6"
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
