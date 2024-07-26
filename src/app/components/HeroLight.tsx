@@ -5,14 +5,13 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import { BackgroundBeams } from "@/components/ui/background-beams";
 
 export function HeroLight() {
 
     const { theme } = useTheme();
 
     return (
-        <div className="h-[33rem] w-full rounded-md flex md:items-center md:justify-center bg-white/[0.96] antialiased bg-grid-black/[0.02] relative overflow-hidden dark:bg-black/[0.96] dark:bg-grid-white/[0.02]">
+        <div className="h-[28rem] w-full rounded-md flex md:items-center md:justify-center bg-white/[0.96] antialiased bg-grid-black/[0.02] relative overflow-hidden dark:bg-black/[0.96] dark:bg-grid-white/[0.02]">
             <Spotlight
                 className="-top-40 left-0 md:left-60 md:-top-20"
                 fill="white"
