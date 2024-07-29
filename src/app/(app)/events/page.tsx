@@ -27,12 +27,6 @@ export default function EventPage() {
                     >
                         Events
                     </h1>
-                    <Button
-                        variant="outline"
-                        className="dark:bg-white bg-black rounded-full dark:text-black py-4 px-4 text-lg font-semibold shadow-md text-white border-2 border-black dark:border-white hover:bg-gray-200 dark:hover:bg-transparent dark:hover:text-white hover:text-black"
-                    >
-                        Create
-                    </Button>
                 </div>
                 <Categories />
             </div>
