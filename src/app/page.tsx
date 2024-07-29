@@ -10,13 +10,16 @@ import { SearchBox } from "./components/SearchBox";
 
 export default function Home() {
   return (
-    <div className="flex flex-col dark:bg-black min-h-screen gap-12 pb-8">
+    <div>
       <ThemeProvider>
+        <Navbar />
+        <div className="flex flex-col dark:bg-black min-h-screen gap-8 pb-8">
           <HeroLight />
           <SearchBox />
           <Featured />
           <Events />
           <Community />
+        </div>
       </ThemeProvider>
     </div>
   );
