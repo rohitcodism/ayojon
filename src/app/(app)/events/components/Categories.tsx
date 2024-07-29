@@ -24,7 +24,7 @@ export const Categories = () => {
                     className={`
                     px-4 py-2 flex justify-center items-center gap-2 rounded-full cursor-pointer text-sm
                     border border-1 
-                    ${selectedCategory === category ? 'bg-indigo-600 text-black dark:hover:bg-indigo-600 dark:border-indigo-600 dark:hover:border-indigo-600' : 'bg-transparent dark:bg-white/20 text-black dark:text-gray-400 border-black dark:border-white/40'} dark:hover:bg-white/50 hover:text-black dark:hover:border-black dark:hover:text-black
+                    ${selectedCategory === category ? 'bg-indigo-600 text-black dark:hover:bg-indigo-600 dark:border-indigo-600 dark:hover:border-indigo-600 dark:bg-indigo-600' : 'bg-transparent text-black dark:text-gray-400 border-black dark:border-white/40 dark:hover:border-white dark:hover:text-white'} hover:text-black
                 `}
                     onClick={() => {setSelectedCategory(category); setddmCategory(null)}}
                 >
