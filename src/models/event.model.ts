@@ -5,6 +5,7 @@ export interface Event extends Document {
     title: string,
     description: string,
     date: Date,
+    category: string,
     location: string,
     capacity: number,
     organizers: User[],
@@ -20,6 +21,10 @@ const eventSchema: Schema<Event> = new Schema({
         type: String,
         minlength: 40,
         required: true,
+    },
+    category: {
+        type: String,
+        required: true
     },
     date: {
         type: Date,
