@@ -15,7 +15,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-white shadow-md dark:bg-black">
+        <nav className="bg-white shadow-md dark:bg-black border-b-[0.2px] border-white">
             <div className=" container py-3 flex justify-between items-center">
                 <div className="text-xl font-bold text-black dark:text-white">
                     <Link href="/">Ayojon</Link>
