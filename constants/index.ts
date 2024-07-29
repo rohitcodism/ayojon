@@ -54,6 +54,30 @@ const featuredEvents: FeaturedEvent[] = [
     }
 ]
 
+const eventCategories: string[] = [
+    "Music",
+    "Sports",
+    "Technology",
+    "Health",
+    "Business",
+    "Education",
+    "Entertainment",
+    "Food & Drink",
+    "Art & Culture",
+    "Networking",
+    "Travel",
+    "Fashion",
+    "Literature",
+    "Science",
+    "Community",
+    "Spirituality",
+    "Workshop",
+    "Conference",
+    "Festival",
+    "Charity"
+];
+
+
 export {
-    eventTypes, featuredEvents
+    eventTypes, featuredEvents, eventCategories
 }
