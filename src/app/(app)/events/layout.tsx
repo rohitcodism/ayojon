@@ -11,6 +11,7 @@ export default function EventLayout (
 ){
     return(
         <div>
+            <Navbar />
             {children}
         </div>
     );
