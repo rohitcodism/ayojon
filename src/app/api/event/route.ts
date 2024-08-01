@@ -11,7 +11,7 @@ async function listEvents(req: NextRequest) {
         const date = searchParams.get('date');
         const location = searchParams.get('location');
 
-        const query: any = {};
+        const query: any = {}; //TODO: Try to avoid any type instead create an interface
 
         if (date) {
             query.date = new Date(date);
