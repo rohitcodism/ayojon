@@ -8,12 +8,13 @@ import {
 import { eventCategories } from "../../../../../constants";
 import { Check, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { useGlobalContext } from "../../../../../context/GlobalContext";
 
 
 
 export const Categories = () => {
 
-    const [selectedCategory, setSelectedCategory] = useState<string | null>("")
+    const { selectedEventCategory, setSelectedEventCategory } = useGlobalContext();
 
     const [ddmCategory, setddmCategory] = useState<string | null>(null)
 
@@ -24,9 +25,9 @@ export const Categories = () => {
                     className={`
                     px-4 py-2 flex justify-center items-center gap-2 rounded-full cursor-pointer text-sm
                     border border-1 
-                    ${selectedCategory === category ? 'bg-indigo-600 text-black dark:hover:bg-indigo-600 dark:border-indigo-600 dark:hover:border-indigo-600 dark:bg-indigo-600' : 'bg-transparent text-black dark:text-gray-400 border-black dark:border-white/40 dark:hover:border-white dark:hover:text-white'} hover:text-black
+                    ${selectedEventCategory === category ? 'bg-indigo-600 text-black dark:hover:bg-indigo-600 dark:border-indigo-600 dark:hover:border-indigo-600 dark:bg-indigo-600' : 'bg-transparent text-black dark:text-gray-400 border-black dark:border-white/40 dark:hover:border-white dark:hover:text-white'} hover:text-black
                 `}
-                    onClick={() => {setSelectedCategory(category); setddmCategory(null)}}
+                    onClick={() => {setSelectedEventCategory(category); setddmCategory(null)}}
                 >
                     <p
                         className="
@@ -34,7 +35,7 @@ export const Categories = () => {
                     >
                         {category}
                     </p>
-                    {selectedCategory === category ? <Check size={15} /> : null}
+                    {selectedEventCategory === category ? <Check size={15} /> : null}
                 </div>
             ))}
             <DropdownMenu>

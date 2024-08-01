@@ -1,46 +1,19 @@
-import { Button } from "@/components/ui/button";
+"use client"
 import { Categories } from "./components/Categories";
 import { featuredEvents } from "../../../../constants";
 import { FeaturedEventCard } from "@/app/components/FeaturedEventCard";
+import { GlobalContextProvider, useGlobalContext } from "../../../../context/GlobalContext";
+import { EventPage } from "./components/EventPage";
 
 
 
-export default function EventPage() {
+export default function Event() {
+
     return (
-        <div
-            className="
-                dark:bg-black 
-                bg-white
-                w-full
-                min-h-screen
-            "
-        >
-            <div className="container py-8 flex flex-col gap-6">
-                <div
-                    className="flex justify-between items-center"
-                >
-                    <h1
-                        className="
-                    text-3xl
-                    font-bold
-                "
-                    >
-                        Events
-                    </h1>
-                </div>
-                <Categories />
+        <GlobalContextProvider>
+            <div>
+                <EventPage />
             </div>
-            <div
-                className="container flex items-center gap-16"
-            >
-                {featuredEvents.map((event, index) => (
-                    <div
-                        key={index}
-                    >
-                        <FeaturedEventCard title={event.name} image={event.image} date={event.date} />
-                    </div>
-                ))}
-            </div>
-        </div>
+        </GlobalContextProvider>
     );
 }

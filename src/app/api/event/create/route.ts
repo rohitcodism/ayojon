@@ -7,17 +7,17 @@ async function createEvent(req: NextRequest) {
 
     try {
         const body = await req.json();
-        const { title, description, date, location, organizers, capacity, speakers } = body;
+        const { title, description, date, location, organizers, capacity, speakers, category } = body;
 
-        
-        if (!title || !description || !date || !location || !organizers || !capacity) {
+
+        if (!title || !description || !date || !location || !organizers || !capacity || !category) {
             return NextResponse.json(
                 { message: "All fields are required" },
                 { status: 400 }
             );
         }
 
-        
+
         if (description.length < 40) {
             return NextResponse.json(
                 { message: "Description must be at least 40 characters long" },
@@ -25,7 +25,7 @@ async function createEvent(req: NextRequest) {
             );
         }
 
-        
+
         if (capacity < 10) {
             return NextResponse.json(
                 { message: "Event capacity must be at least 10" },
@@ -36,11 +36,12 @@ async function createEvent(req: NextRequest) {
         const newEvent = new eventModel({
             title,
             description,
-            date: new Date(date), 
+            category,
+            date: new Date(date),
             location,
             organizers,
             capacity,
-            speakers: speakers || [] 
+            speakers: speakers || []
         });
 
         const savedEvent = await newEvent.save();
