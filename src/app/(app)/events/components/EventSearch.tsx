@@ -20,14 +20,14 @@ export const SearchBox = () => {
                     className="
                     max-w-[500px]
                     bg-black
-                    border-2
+                    border-[1px]
                     border-white
                     px-4
                     py-4
                     rounded-full
                     outline-none
                     text-white
-                    text-base
+                    text-sm
                 "
                     style={{ outline: 'none', boxShadow: 'none' }}
                 />
