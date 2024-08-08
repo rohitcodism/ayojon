@@ -10,8 +10,6 @@ export const EventPage = () => {
 
     const { selectedEventCategory } = useGlobalContext();
 
-    console.log(selectedEventCategory);
-
     let listedEvents;
 
     if(selectedEventCategory){
@@ -19,8 +17,6 @@ export const EventPage = () => {
     }else{
         listedEvents = featuredEvents;
     }
-
-    console.log(listedEvents);
 
     return (
         <div
@@ -49,13 +45,15 @@ export const EventPage = () => {
             <div
                 className="container flex items-center gap-16"
             >
-                {listedEvents.map((event, index) => (
+                {listedEvents.length ? (listedEvents.map((event, index) => (
                     <div
                         key={index}
                     >
                         <FeaturedEventCard title={event!.name} image={event!.image} date={event!.date} />
                     </div>
-                ))}
+                ))) : (<div className="flex justify-center items-center text-lg font-medium w-full h-[200px] text-gray-500">
+                    <p>No upcoming events for this category</p>
+                </div>)}
             </div>
         </div>
     );
