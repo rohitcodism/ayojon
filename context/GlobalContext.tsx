@@ -3,6 +3,8 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface GlobalContextType{
     selectedEventCategory: string | null,
+    ddmCategory: string | null,
+    setDdmCategory: (category: string | null) => void;
     setSelectedEventCategory: (category: string | null) => void
 }
 
@@ -17,8 +19,10 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({chi
 
     const [selectedEventCategory, setSelectedEventCategory] =  useState<string | null>(null)
 
+    const[ddmCategory, setDdmCategory] = useState<string | null>(null)
+
     return(
-        <GlobalContext.Provider value={{ selectedEventCategory, setSelectedEventCategory }}>
+        <GlobalContext.Provider value={{ selectedEventCategory, setSelectedEventCategory, ddmCategory, setDdmCategory }}>
             {children}
         </GlobalContext.Provider>
     );

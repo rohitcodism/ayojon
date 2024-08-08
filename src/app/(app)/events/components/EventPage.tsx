@@ -1,22 +1,28 @@
 
 import { FeaturedEventCard } from "@/app/components/FeaturedEventCard"
-import { featuredEvents } from "../../../../../constants"
+import { FeaturedEvent, featuredEvents } from "../../../../../constants"
 import { Categories } from "./Categories"
 import { useGlobalContext } from "../../../../../context/GlobalContext"
 
-
+//TODO: Fix the categorization!!
 
 export const EventPage = () => {
 
-    const { selectedEventCategory } = useGlobalContext();
+    const { selectedEventCategory, ddmCategory } = useGlobalContext();
 
-    let listedEvents;
+    let listedEvents: FeaturedEvent[] | null = null;
+
+    console.log(ddmCategory);
 
     if(selectedEventCategory){
         listedEvents = featuredEvents.filter((event) => event.category === selectedEventCategory);
-    }else{
+    }else if(ddmCategory){
+        listedEvents = featuredEvents.filter((event) => event.category === ddmCategory);
+    }else if(!selectedEventCategory || !ddmCategory){
         listedEvents = featuredEvents;
     }
+
+    console.log("Listed Events: ",listedEvents);
 
     return (
         <div
@@ -45,11 +51,11 @@ export const EventPage = () => {
             <div
                 className="container flex items-center gap-16"
             >
-                {listedEvents.length ? (listedEvents.map((event, index) => (
+                {listedEvents.length != 0 ? (listedEvents.map((event, index) => (
                     <div
                         key={index}
                     >
-                        <FeaturedEventCard title={event!.name} image={event!.image} date={event!.date} />
+                        <FeaturedEventCard title={event.name} image={event.image} date={event.date} />
                     </div>
                 ))) : (<div className="flex justify-center items-center text-lg font-medium w-full h-[200px] text-gray-500">
                     <p>No upcoming events for this category</p>

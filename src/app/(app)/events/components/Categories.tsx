@@ -14,9 +14,9 @@ import { useGlobalContext } from "../../../../../context/GlobalContext";
 
 export const Categories = () => {
 
-    const { selectedEventCategory, setSelectedEventCategory } = useGlobalContext();
+    const { selectedEventCategory, setSelectedEventCategory, ddmCategory, setDdmCategory } = useGlobalContext();
 
-    const [ddmCategory, setddmCategory] = useState<string | null>(null)
+    console.log(ddmCategory);
 
     return (
         <div className="flex items-center gap-16 max-w-[300px]">
@@ -27,7 +27,7 @@ export const Categories = () => {
                     border border-1 
                     ${selectedEventCategory === category ? 'bg-indigo-600 text-black dark:hover:bg-indigo-600 dark:border-indigo-600 dark:hover:border-indigo-600 dark:bg-indigo-600' : 'bg-transparent text-black dark:text-gray-400 border-black dark:border-white/40 dark:hover:border-white dark:hover:text-white'} hover:text-black
                 `}
-                    onClick={() => {setSelectedEventCategory(category); setddmCategory(null)}}
+                    onClick={() => { setSelectedEventCategory(category); setDdmCategory(null) }}
                 >
                     <p
                         className="
@@ -38,6 +38,26 @@ export const Categories = () => {
                     {selectedEventCategory === category ? <Check size={15} /> : null}
                 </div>
             ))}
+            {
+                ddmCategory && (
+                    <div
+                        className={`
+                    px-4 py-2 flex justify-center items-center gap-2 rounded-full cursor-pointer text-sm
+                    border border-1 
+                    ${ddmCategory === ddmCategory ? 'bg-indigo-600 text-black dark:hover:bg-indigo-600 dark:border-indigo-600 dark:hover:border-indigo-600 dark:bg-indigo-600' : 'bg-transparent text-black dark:text-gray-400 border-black dark:border-white/40 dark:hover:border-white dark:hover:text-white'} hover:text-black
+                `}
+                        onClick={() => {setSelectedEventCategory(null) }}
+                    >
+                        <p
+                            className="
+                        "
+                        >
+                            {ddmCategory}
+                        </p>
+                        {ddmCategory === ddmCategory ? <Check size={15} /> : null}
+                    </div>
+                )
+            }
             <DropdownMenu>
                 <DropdownMenuTrigger className="focus:outline-none">
                     <div
@@ -51,7 +71,7 @@ export const Categories = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-white dark:bg-black border-[0.5px] dark:border-white border-black">
                     {eventCategories.slice(6, 11).map((category) => (
-                        <DropdownMenuItem className="dark:focus:bg-white/30 cursor-pointer hover:text-black focus:bg-black/30">
+                        <DropdownMenuItem onClick={() => {setDdmCategory(category); setSelectedEventCategory(null)}} className="dark:focus:bg-white/30 cursor-pointer hover:text-black focus:bg-black/30">
                             {category}
                         </DropdownMenuItem>
                     ))}

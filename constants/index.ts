@@ -29,7 +29,7 @@ const eventTypes = [
     }
 ]
 
-interface FeaturedEvent {
+export interface FeaturedEvent {
     name: string;
     image: StaticImageData;
     date: string; // Using ISO 8601 format for date
