@@ -12,6 +12,16 @@ export const EventPage = () => {
 
     console.log(selectedEventCategory);
 
+    let listedEvents;
+
+    if(selectedEventCategory){
+        listedEvents = featuredEvents.filter((event) => event.category === selectedEventCategory);
+    }else{
+        listedEvents = featuredEvents;
+    }
+
+    console.log(listedEvents);
+
     return (
         <div
             className="
@@ -39,11 +49,11 @@ export const EventPage = () => {
             <div
                 className="container flex items-center gap-16"
             >
-                {featuredEvents.map((event, index) => (
+                {listedEvents.map((event, index) => (
                     <div
                         key={index}
                     >
-                        <FeaturedEventCard title={event.name} image={event.image} date={event.date} />
+                        <FeaturedEventCard title={event!.name} image={event!.image} date={event!.date} />
                     </div>
                 ))}
             </div>

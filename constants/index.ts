@@ -6,22 +6,26 @@ const eventTypes = [
     {
         id: 1,
         title: "Music & Festivals",
-        image: musicEventImage
+        image: musicEventImage,
+        category: "Music"
     },
     {
         id: 2,
         title: "Tech & Business",
-        image: techEventImage
+        image: techEventImage,
+        category: "Technology"
     },
     {
         id: 3,
         title: "Comedy & Theaters",
-        image: standUpImage
+        image: standUpImage,
+        category: "Comedy"
     },
     {
         id: 4,
         title: "Health & Wellness",
-        image: yogaImage
+        image: yogaImage,
+        category: "Art & Culture"
     }
 ]
 
@@ -29,34 +33,40 @@ interface FeaturedEvent {
     name: string;
     image: StaticImageData;
     date: string; // Using ISO 8601 format for date
+    category: string;
 }
 
 const featuredEvents: FeaturedEvent[] = [
     {
         name: "Tech Conference 2024",
         image: techEventImage,
-        date: "15 August"
+        date: "15 August",
+        category: "Technology"
     },
     {
         name: "Summer Music Festival",
         image: musicEventImage,
-        date: "22 July"
+        date: "22 July",
+        category: "Music"
     },
     {
         name: "Stand-Up Comedy Night",
         image: standUpImage,
-        date: "5 September"
+        date: "5 September",
+        category: "Comedy"
     },
     {
         name: "Yoga Day Celebration",
         image: yogaImage,
-        date: "10 October"
+        date: "10 October",
+        category: "Art & Culture"
     }
 ]
 
 const eventCategories: string[] = [
     "Music",
     "Sports",
+    "Comedy",
     "Technology",
     "Health",
     "Business",
