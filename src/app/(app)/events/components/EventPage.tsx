@@ -12,17 +12,17 @@ export const EventPage = () => {
 
     let listedEvents: FeaturedEvent[] | null = null;
 
-    console.log(ddmCategory);
-
     if(selectedEventCategory){
-        listedEvents = featuredEvents.filter((event) => event.category === selectedEventCategory);
+        if(selectedEventCategory == "All"){
+            listedEvents=featuredEvents;
+        }else{
+            listedEvents = featuredEvents.filter((event) => event.category === selectedEventCategory);
+        }
     }else if(ddmCategory){
         listedEvents = featuredEvents.filter((event) => event.category === ddmCategory);
     }else if(!selectedEventCategory || !ddmCategory){
         listedEvents = featuredEvents;
     }
-
-    console.log("Listed Events: ",listedEvents);
 
     return (
         <div
@@ -51,7 +51,7 @@ export const EventPage = () => {
             <div
                 className="container flex items-center gap-16"
             >
-                {listedEvents.length != 0 ? (listedEvents.map((event, index) => (
+                {listedEvents?.length != 0 ? (listedEvents?.map((event, index) => (
                     <div
                         key={index}
                     >
