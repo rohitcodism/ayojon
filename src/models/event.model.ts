@@ -19,7 +19,7 @@ const eventSchema: Schema<Event> = new Schema({
     },
     description: {
         type: String,
-        minlength: 40,
+        minlength: 100,
         required: true,
     },
     category: {

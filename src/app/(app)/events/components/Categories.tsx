@@ -16,11 +16,9 @@ export const Categories = () => {
 
     const { selectedEventCategory, setSelectedEventCategory, ddmCategory, setDdmCategory } = useGlobalContext();
 
-    console.log(ddmCategory);
-
     return (
         <div className="flex items-center gap-16 max-w-[300px]">
-            {eventCategories.slice(0, 5).map((category) => (
+            {eventCategories.slice(0, 6).map((category) => (
                 <div
                     className={`
                     px-4 py-2 flex justify-center items-center gap-2 rounded-full cursor-pointer text-sm
@@ -43,7 +41,7 @@ export const Categories = () => {
                     <div
                         className={`
                     px-4 py-2 flex justify-center items-center gap-2 rounded-full cursor-pointer text-sm
-                    border border-1 
+                    border border-1  text-nowrap
                     ${ddmCategory === ddmCategory ? 'bg-indigo-600 text-black dark:hover:bg-indigo-600 dark:border-indigo-600 dark:hover:border-indigo-600 dark:bg-indigo-600' : 'bg-transparent text-black dark:text-gray-400 border-black dark:border-white/40 dark:hover:border-white dark:hover:text-white'} hover:text-black
                 `}
                         onClick={() => {setSelectedEventCategory(null) }}

@@ -64,6 +64,7 @@ const featuredEvents: FeaturedEvent[] = [
 ]
 
 const eventCategories: string[] = [
+    "All",
     "Music",
     "Sports",
     "Comedy",
