@@ -18,6 +18,7 @@ import { signIn } from "next-auth/react";
 import GoogleIcon from "../../../../public/assets/icons8-google.svg";
 import Image from "next/image";
 
+
 const SignUp = () => {
     const router = useRouter();
 
