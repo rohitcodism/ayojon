@@ -43,5 +43,6 @@ const eventSchema = z.object({
 
 export {
     defaultEventDate,
-    eventSchema
+    eventSchema,
+    allowedCategories
 }
