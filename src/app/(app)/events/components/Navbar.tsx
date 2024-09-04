@@ -1,6 +1,9 @@
+'use client'
 import Link from "next/link"
 import { SearchBox } from "./EventSearch";
 import { Button } from "@/components/ui/button";
+import { motion } from 'framer-motion'
+import { CreateEvent } from "./createEvent";
 
 
 
@@ -12,12 +15,7 @@ export const Navbar = () => {
                     <Link href="/">Ayojon</Link>
                 </div>
                 <SearchBox />
-                <Button
-                    variant="outline"
-                    className="dark:bg-white bg-black rounded-full dark:text-black py-4 px-4 text-lg font-semibold shadow-md text-white border-2 border-black dark:border-white hover:bg-gray-200 dark:hover:bg-transparent dark:hover:text-white hover:text-black"
-                >
-                    Create Event
-                </Button>
+                <CreateEvent />
             </div>
         </nav>
     );
