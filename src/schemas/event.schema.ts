@@ -32,7 +32,7 @@ const defaultEventDate: Date = new Date(Date.now() + 24*3600000)
 
 const eventSchema = z.object({
     eventName: z.string().min(5, "Event name must contain 5 letters.").max(20, "Event name can contain at max 20 letters."),
-    description: z.string().min(100, "Event description must contain at least 100 words.").max(300, "Event description can at most contain 300 letters."),
+    description: z.string().min(10, "Event description must contain at least 10 words.").max(300, "Event description can at most contain 300 letters."), //TODO: Adjust it according to its need
     category: z.enum(allowedCategories),
     date: z.date().default(defaultEventDate),
     location: z.string(),
