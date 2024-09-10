@@ -3,7 +3,7 @@ import { z } from "zod";
 
 
 const userVeificationSchema = z.object({
-    verificationCode: z.string().min(6, "Invalid OTP").max(6, "Invalid OTP")
+    otp: z.string().length(6, "OTP must contain 6 numbers!!")
 })
 
 export{
