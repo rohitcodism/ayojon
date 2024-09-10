@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import GoogleIcon from "../../../../public/assets/icons8-google.svg";
 import Image from "next/image";
+import { useToast } from "@/components/ui/use-toast";
 
 
 const SignUp = () => {
@@ -31,6 +32,8 @@ const SignUp = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const debounced = useDebounceCallback(setUsername, 500);
+
+    const { toast } = useToast();
 
     const form = useForm<z.infer<typeof signUpSchema>>({
         resolver: zodResolver(signUpSchema),
@@ -93,9 +96,20 @@ const SignUp = () => {
 
             console.log("Response from Sign up API", res);
 
-            router.replace("/");
+            toast({
+                title: "Success",
+                description: "Please verify your account before logging in.",
+                variant: "default"
+            })
+
+            router.replace("/verify");
         } catch (error) {
             console.log("Error from signup API: ", error);
+            toast({
+                title: "Oops!!",
+                description: "Something went wrong while signing up.",
+                variant: "destructive"
+            })
         } finally {
             setIsSubmitting(false);
         }
