@@ -6,8 +6,12 @@ import { MenuIcon, XIcon } from 'lucide-react';
 import { Button } from './button';
 import { motion, AnimatePresence } from "framer-motion"
 import { ModeToggle } from './darkMode';
+import { useSession } from 'next-auth/react';
+import { signOut, signIn } from 'next-auth/react';
 
 const Navbar = () => {
+
+    const {data: session, status} = useSession();
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -31,7 +35,9 @@ const Navbar = () => {
                         <div>
                             <ModeToggle />
                         </div>
-                        <Link href={"/signup"}><Button className='rounded-lg'>Sign up</Button></Link>
+                        {
+                            status === 'authenticated' ? (<Button onClick={() => signOut()} className='rounded-lg'>Sign out</Button>)  : (<Link href={"/signup"}><Button className='rounded-lg'>Sign up</Button></Link>)
+                        }
                     </div>
                     <div className="md:hidden">
                         <button onClick={toggleMenu} className="text-gray-800 focus:outline-none">
