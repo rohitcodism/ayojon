@@ -35,7 +35,7 @@ export async function POST(req: NextRequest){
                     message: "User not found!!"
                 },
                 {
-                    status: 400
+                    status: 404
                 }
             )
         }
