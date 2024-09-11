@@ -24,6 +24,8 @@ export const authOptions : NextAuthOptions = {
             async authorize(credentials: any) : Promise<any> {
                 await dbConnect()
 
+                console.log("Credentials: ",credentials)
+
                 try {
                     
                     const user = await UserModel.findOne({
@@ -50,6 +52,7 @@ export const authOptions : NextAuthOptions = {
                     return user;
 
                 } catch (error: any) {
+                    console.log(error);
                     throw new Error(error);
                 }
             }
