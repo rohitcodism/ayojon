@@ -86,15 +86,11 @@ const SignUp = () => {
                 formData.append("profilePicture", data.profilePicture);
             }
 
-            console.log("formData: ", formData);
-
             const res = await axios.post(`/api/signup`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
-
-            console.log("Response from Sign up API", res);
 
             toast({
                 title: "Success",
@@ -102,7 +98,7 @@ const SignUp = () => {
                 variant: "default"
             })
 
-            router.replace("/verify");
+            router.replace (`/verify/${data.username}`);
         } catch (error) {
             console.log("Error from signup API: ", error);
             toast({
@@ -218,7 +214,7 @@ const SignUp = () => {
                     </form>
                     <div className="flex flex-col justify-center items-center py-2 gap-2">
                         <Button size={"lg"} className="self-center w-full cursor-pointer dark:bg-blue-600 dark:text-white" onClick={() => signIn("google")}>
-                            {isSubmitting ? <Loader2 className="animate-spin" /> : (<div className="flex justify-center items-center gap-4">Sign up with Google <Image src={GoogleIcon} alt="google-icon" height={20} width={20} /></div>)}
+                            <div className="flex justify-center items-center gap-4">Sign up with Google <Image src={GoogleIcon} alt="google-icon" height={20} width={20} /></div>
                         </Button>
                         <Link href={"/login"}>
                             <p className="hover:text-black text-gray-600 dark:text-gray-300 dark:hover:text-white underline">Already a member?</p>
