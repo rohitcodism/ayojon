@@ -4,6 +4,7 @@ import { featuredEvents } from "../../../../constants";
 import { FeaturedEventCard } from "@/app/components/FeaturedEventCard";
 import { GlobalContextProvider, useGlobalContext } from "../../../../context/GlobalContext";
 import { EventPage } from "./components/EventPage";
+import { SessionProvider } from "next-auth/react";
 
 
 

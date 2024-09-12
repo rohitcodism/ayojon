@@ -1,18 +1,22 @@
+'use client'
+import { SessionProvider } from "next-auth/react";
 import { Navbar } from "./components/Navbar";
 
 
 
-export default function EventLayout (
+export default function EventLayout(
     {
         children
     }: {
         children: React.ReactNode
     }
-){
-    return(
-        <div>
-            <Navbar />
-            {children}
-        </div>
+) {
+    return (
+        <SessionProvider>
+            <div>
+                <Navbar />
+                {children}
+            </div>
+        </SessionProvider>
     );
 }
