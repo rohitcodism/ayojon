@@ -63,11 +63,43 @@ export const authOptions : NextAuthOptions = {
         })
     ],
     callbacks: {
-        async jwt({ token, user }){
+        async signIn({user, account, profile}){
+            if(account?.provider === 'google'){
+                await dbConnect();
+
+                const existingUser = await UserModel.findOne({
+                    email: profile?.email
+                })
+
+                if(!existingUser){
+                    const newUser = new UserModel({
+                        username: profile?.name || profile?.email?.split('@')[0],
+                        email: profile?.email,
+                        password: null,
+                        verifyCode: null,
+                        profilePicture: profile?.picture,
+                        isVerified: true,
+                        oAuth: true
+                    })
+
+                    await newUser.save();
+                }
+            }
+
+            return true
+        },
+        async jwt({ token, user, account, profile }){
             if(user){
                 token._id = user._id?.toString();
                 token.username = user.username;
             }
+
+            if(account && account.provider === 'google'){
+                token._id = token.sub,
+                token.username = profile?.name || profile?.email?.split('@')[0],
+                token.isVerified = true
+            }
+
             return token;
         },
         async session({session, token}) {
@@ -82,10 +114,10 @@ export const authOptions : NextAuthOptions = {
         },
     },
     pages: {
-        signIn: "signin"
+        signIn: "/login"
     },
     session: {
         strategy: 'jwt'
     },
-    secret: process.env.NEXTAUTH_SECRET
+    secret: process.env.NEXTAUTH_SECRET,
 }
