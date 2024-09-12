@@ -12,6 +12,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { signIn } from "next-auth/react"
 import { useRouter } from 'next/navigation';
+import { toast } from '@/components/ui/use-toast';
 
 const Login = () => {
 
@@ -46,14 +47,32 @@ const Login = () => {
 
             console.log("login result : ", res)
 
+            toast({
+                title: "Success!!",
+                description: "User logged in successfully.",
+                variant: "default"
+            })
+
             if (res?.error) {
                 console.log("Log in error: ", res.error)
+                toast({
+                    title: "Oops!!",
+                    description: "Something went wrong while loggin in.",
+                    variant: "destructive"
+                })
             } else {
                 router.replace("/")
             }
 
         } catch (error) {
             console.log("Login api error", error)
+            toast({
+                title: "Oops!!",
+                description: "Something went wrong while loggin in.",
+                variant: "destructive"
+            })
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
@@ -63,22 +82,29 @@ const Login = () => {
                 flex
                 justify-center
                 items-center
-                min-h-screen
                 bg-gray-100
+                dark:bg-black
                 gap-8
                 py-8
+                w-full
+                min-h-screen
             '
         >
             <div
                 className='
-                    w-full
-                    max-w-lg
                     p-6
                     pb-4
                     space-y-2
                     bg-white
-                    rounded-lg
+                    dark:bg-black
+                    border-solid
+                    border-2
+                    border-black
+                    dark:border-white
+                    rounded-2xl
                     shadow-md
+                    w-[40%]
+                    h-[50%]
                 '
             >
                 <div
@@ -96,7 +122,7 @@ const Login = () => {
                         Ayojon
                     </h1>
                     <p
-                        className='mb-4'
+                        className='mb-4 text-lg font-medium'
                     >
                         Login
                     </p>
@@ -160,11 +186,9 @@ const Login = () => {
                         <Button
                             size={"lg"}
                             className="self-center w-full cursor-pointer"
-                            onClick={() => signIn("google")}
+                            onClick={() => {signIn("google", { callbackUrl: "/" })}}
                         >
-                            {
-                                isSubmitting ? <Loader2 className="animate-spin" /> : "Sign in with Google"
-                            }
+                            Sign in with Google
                         </Button>
                         <Link
                             href={"/signup"}
