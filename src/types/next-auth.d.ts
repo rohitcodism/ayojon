@@ -28,3 +28,9 @@ declare module 'next-auth/jwt' {
         isVerified?: boolean
     }
 }
+
+declare module 'next-auth'{
+    interface Profile {
+        picture: string | undefined
+    }
+}
