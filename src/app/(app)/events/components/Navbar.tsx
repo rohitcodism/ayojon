@@ -4,6 +4,7 @@ import { SearchBox } from "./EventSearch";
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion'
 import { CreateEvent } from "./createEvent";
+import { UserAvatar } from "@/app/components/UserAvatar";
 
 
 
@@ -16,6 +17,7 @@ export const Navbar = () => {
                 </div>
                 <SearchBox />
                 <CreateEvent />
+                <UserAvatar />
             </div>
         </nav>
     );
