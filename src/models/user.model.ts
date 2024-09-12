@@ -9,6 +9,7 @@ export interface User extends Document {
     verifyCode: string,
     verifyCodeExpiry: Date,
     isVerified: boolean,
+    oAuth: boolean
 }
 
 const userSchema: Schema<User> = new Schema({
@@ -28,11 +29,11 @@ const userSchema: Schema<User> = new Schema({
         },
         password: {
             type: String,
-            required: [true, "Password is required!!"],
+            required: function() { return !this.oAuth },
         },
         verifyCode: {
             type: String,
-            required: [true, "Verify code is required!!"]
+            required: function() { return !this.oAuth }
         },
         verifyCodeExpiry: {
             type: Date,
@@ -43,6 +44,11 @@ const userSchema: Schema<User> = new Schema({
             type: Boolean,
             default: false
         },
+        oAuth: {
+            type: Boolean,
+            required: true,
+            default: false
+        }
     },
     {
         timestamps: true
