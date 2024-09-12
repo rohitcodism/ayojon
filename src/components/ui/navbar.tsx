@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ModeToggle } from './darkMode';
 import { useSession } from 'next-auth/react';
 import { signOut, signIn } from 'next-auth/react';
+import { UserAvatar } from '@/app/components/UserAvatar';
 
 const Navbar = () => {
 
@@ -36,7 +37,7 @@ const Navbar = () => {
                             <ModeToggle />
                         </div>
                         {
-                            status === 'authenticated' ? (<Button onClick={() => signOut()} className='rounded-lg'>Sign out</Button>)  : (<Link href={"/signup"}><Button className='rounded-lg'>Sign up</Button></Link>)
+                            status === 'authenticated' ? (<UserAvatar />)  : (<Link href={"/signup"}><Button className='rounded-lg'>Sign up</Button></Link>)
                         }
                     </div>
                     <div className="md:hidden">
