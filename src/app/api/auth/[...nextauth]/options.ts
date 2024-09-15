@@ -73,7 +73,7 @@ export const authOptions : NextAuthOptions = {
 
                 if(!existingUser){
                     const newUser = new UserModel({
-                        username: profile?.name || profile?.email?.split('@')[0],
+                        username: profile?.name?.split(" ")[0] || profile?.email?.split('@')[0],
                         email: profile?.email,
                         password: null,
                         verifyCode: null,
