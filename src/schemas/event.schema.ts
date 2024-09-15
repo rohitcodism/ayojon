@@ -37,12 +37,12 @@ const eventSchema = z.object({
     date: z.date().default(defaultEventDate),
     location: z.string(),
     capacity: z.number(),
-    organizers: z.array(userSchema),
-    speakers: z.array(userSchema)
+    organizers: z.string(),
+    speakers: z.string()
 })
 
 export {
     defaultEventDate,
     eventSchema,
-    allowedCategories
+    allowedCategories,
 }
