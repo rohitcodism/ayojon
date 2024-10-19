@@ -18,6 +18,7 @@ async function createEvent(req: NextRequest) {
         const capacity = formData.get("capacity") as string;
         const category = formData.get("category") as string;
         const banner = formData.get("banner") as File | undefined;
+        const owner = formData.get("owner") as string;
 
         let bannerUrl = "";
 
@@ -84,6 +85,7 @@ async function createEvent(req: NextRequest) {
             price: priceN,
             capacity: capacityN,
             banner: bannerUrl ? bannerUrl : "",
+            createdBy: owner
         });
 
         const savedEvent = await newEvent.save();
