@@ -19,19 +19,22 @@ export const SearchBox = () => {
                     placeholder="Search for an upcoming event"
                     className="
                     max-w-[800px]
-                    bg-black
+                    bg-white
+                    dark:bg-black
                     border-2
-                    border-white
+                    border-black
+                    text-gray-500
+                    dark:border-white
+                    dark:text-white
                     px-6
                     py-8
                     rounded-full
                     outline-none
-                    text-white
-                    text-base
+                    text-xl
                 "
                     style={{ outline: 'none', boxShadow: 'none' }}
                 />
-                <Search className="absolute right-8 top-1/2 transform -translate-y-1/2 text-white"/>
+                <Search className="absolute right-8 top-1/2 transform -translate-y-1/2 dark:text-white text-black"/>
             </div>
         </div>
     );
