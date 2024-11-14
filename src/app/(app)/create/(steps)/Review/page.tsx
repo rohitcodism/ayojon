@@ -1,20 +1,16 @@
 // src/pages/create-event/steps/Review.tsx
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 import {
     MapPin,
     CalendarCheck,
     Users,
 } from "lucide-react";
-import { cloudinaryUploader } from "@/helpers/cloudinaryUploader";
+import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 
 const Review = () => {
     const { getValues } = useFormContext();
     const data = getValues();
-
-    console.log(data.banner);
 
     //TODO: Find some way to render the banner
     // if(data.banner) {
@@ -27,6 +23,8 @@ const Review = () => {
     //         console.log(data.banner)
     //     })
     // }
+
+    
 
     return (
         <div className="space-y-6">
@@ -121,7 +119,7 @@ const Review = () => {
                 </div>
             </div>
 
-            {/* Capacity and Organizers Card */}
+            {/* Capacity and Tickets Card */}
             <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
                 <div className="flex items-center mb-4">
                     <Users className="h-6 w-6 text-indigo-500 mr-2" />
@@ -146,9 +144,33 @@ const Review = () => {
                             Booking
                         </p>
                         <p className="mt-1 text-lg text-gray-700 dark:text-gray-300">
-                            ₹ {data.price} 
+                            ₹ {data.price}
                         </p>
                     </div>
+                </div>
+            </div>
+
+            {/* Organizer and Speaker Cards */}
+            <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col">
+                <div className="flex items-center mb-4">
+                    <Users className="h-6 w-6 text-indigo-500 mr-2" />
+                    <h3 className="text-xl font-medium text-gray-700 dark:text-gray-200">
+                        Organizer & Speaker
+                    </h3>
+                </div>
+                <div className="pb-4">
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400 py-4">
+                        Organizer
+                    </p>
+                    <AnimatedTooltip items={data.organizers} />
+                </div>
+
+                {/* Speaker */}
+                <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400 py-4">
+                        Speaker
+                    </p>
+                    <AnimatedTooltip items={data.speakers} />
                 </div>
             </div>
         </div>
