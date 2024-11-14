@@ -17,7 +17,6 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Step5 } from "./(steps)/Step5/page";
-import { cloudinaryUploader } from "@/helpers/cloudinaryUploader";
 
 // Define the form's data structure
 type FormData = z.infer<typeof eventSchema>;
@@ -107,26 +106,27 @@ const MultiStepForm = () => {
                         {currentStep === 1 && <Step1 />}
                         {currentStep === 2 && <Step2 />}
                         {currentStep === 3 && <Step3 />}
-                        {currentStep === 4 && <Step5 />}
-                        {currentStep === 5 && <Review />}
+                        {currentStep === 4 && <Step4 />}
+                        {currentStep === 5 && <Step5 />}
+                        {currentStep === 6 && <Review />}
 
                         <div className="flex justify-between mt-4">
-                            {currentStep < 5 && (
+                            {currentStep < 6 && (
                                 <Button size={'lg'} type="button" variant="outline" onClick={prevStep} className="bg-transparent border-2 border-white">
                                     Back
                                 </Button>
                             )}
-                            {currentStep === 5 && (
+                            {currentStep === 6 && (
                                 <Button size={'lg'} type="button" variant="outline" onClick={() => setCurrentStep(1)} className="bg-transparent border-2 border-white">
                                     Edit Event
                                 </Button>
                             )}
-                            {currentStep < 5 && (
+                            {currentStep < 6 && (
                                 <Button disabled={!isValid && currentStep !== 5} type="button" size={'lg'} onClick={nextStep}>
                                     Next
                                 </Button>
                             )}
-                            {currentStep === 5 && (
+                            {currentStep === 6 && (
                                 <Button type="submit" size={'lg'} disabled={!isValid}>
                                     {isSubmitting ? <Loader2 className="animate-spin" /> : "Create Event"}
                                 </Button>
