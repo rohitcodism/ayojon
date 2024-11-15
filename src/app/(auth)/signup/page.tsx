@@ -40,6 +40,7 @@ const SignUp = () => {
 
         defaultValues: {
             username: "",
+            fullname: "",
             email: "",
             password: "",
             confirmPassword: "",
@@ -79,6 +80,7 @@ const SignUp = () => {
             const formData = new FormData();
 
             formData.append("username", data.username);
+            formData.append("fullname", data.fullname);
             formData.append("email", data.email);
             formData.append("password", data.password);
 
@@ -141,6 +143,23 @@ const SignUp = () => {
                                     <p className={`text-sm ${usernameMessage === "Username is available!!" ? "text-green-500" : "text-red-500"} font-medium`}>
                                         {usernameMessage}
                                     </p>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="fullname"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Full Name</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="what's your full name"
+                                            {...field}
+                                            className="dark:bg-gray-700 dark:text-white"
+                                        />
+                                    </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}

@@ -119,10 +119,10 @@ const Step4 = () => {
                                         <Badge key={speaker.id} className="flex items-center gap-1 py-1">
                                             <Image
                                                 src={speaker.profilePicture}
-                                                alt={speaker.username}
+                                                alt={speaker.username[0]}
                                                 height={25}
                                                 width={25}
-                                                className="rounded-full"
+                                                className="rounded-full border-2 border-solid border-green-600 text-center h-8 w-8 flex"
                                             />
                                             <span>{speaker.username}</span>
                                             <button
@@ -151,10 +151,10 @@ const Step4 = () => {
                                             >
                                                 <Image
                                                     src={speaker.profilePicture}
-                                                    alt={speaker.username}
+                                                    alt={speaker.username[0]}
                                                     height={25}
                                                     width={25}
-                                                    className="rounded-full"
+                                                    className="rounded-full border-2 border-solid border-green-600 text-center h-8 w-8"
                                                 />
                                                 <p className="text-base font-semibold">{speaker.username}</p>
                                             </div>
@@ -188,10 +188,10 @@ const Step4 = () => {
                                         <Badge key={organizer.id} className="flex items-center py-1 gap-1">
                                                 <Image
                                                     src={organizer.profilePicture}
-                                                    alt={organizer.username}
+                                                    alt={organizer.username[0]}
                                                     height={25}
                                                     width={25}
-                                                    className="rounded-full"
+                                                    className="rounded-full border-2 border-solid border-orange-600 text-center h-8 w-8"
                                                 />
                                             <span>{organizer.username}</span>
                                             <button
@@ -220,10 +220,10 @@ const Step4 = () => {
                                             >
                                                 <Image
                                                     src={organizer.profilePicture}
-                                                    alt={organizer.username}
+                                                    alt={organizer.username[0]}
                                                     height={25}
                                                     width={25}
-                                                    className="rounded-full"
+                                                    className="rounded-full border-2 border-solid border-orange-600 text-center h-8 w-8"
                                                 />
                                                 <p className="text-base font-semibold">{organizer.username}</p>
                                             </div>

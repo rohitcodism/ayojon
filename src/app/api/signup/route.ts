@@ -17,9 +17,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
         const formData = await req.formData()
 
         const username = formData.get('username') as string
+        const fullname = formData.get('fullname') as string
         const email = formData.get('email') as string
         const password = formData.get('password') as string
         const profilePicture = formData.get('profilePicture') as File | undefined
+
+        console.log(fullname)
 
         console.log(profilePicture);
 
@@ -105,6 +108,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             const newUser = await UserModel.create(
                 {
                     username,
+                    fullname,
                     email,
                     profilePicture: profilePictureUrl != "" ? profilePictureUrl : "",
                     password: hashedPassword,

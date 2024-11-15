@@ -80,8 +80,8 @@ export const AnimatedTooltip = ({
                         height={50}
                         width={50}
                         src={item.profilePicture}
-                        alt={item.username}
-                        className="object-cover !m-0 !p-0 object-top rounded-full h-10 w-10 border-2 group-hover:scale-105 group-hover:z-30 border-blue-600  relative transition duration-500"
+                        alt={item.username[0]}
+                        className="object-cover !m-0 !p-0 object-top rounded-full h-10 w-10 border-2 group-hover:scale-105 group-hover:z-30 border-blue-600  relative transition duration-500 text-center"
                     />
                 </div>
             ))}

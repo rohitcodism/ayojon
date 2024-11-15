@@ -49,6 +49,8 @@ const MultiStepForm = () => {
 
     const { data: session } = useSession();
 
+    console.log(session)
+
     const onSubmit: SubmitHandler<FormData> = async (data) => {
 
         const formData = new FormData();
