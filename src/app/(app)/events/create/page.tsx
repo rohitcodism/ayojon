@@ -49,7 +49,7 @@ const MultiStepForm = () => {
 
     const { data: session } = useSession();
 
-    console.log(methods.getValues());
+    console.log(session);
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
 
@@ -64,7 +64,7 @@ const MultiStepForm = () => {
         formData.append("price", data.price )
         formData.append("organizers", JSON.stringify(data.organizers) )
         formData.append("speakers", JSON.stringify(data.speakers) )
-        formData.append("owner", session?.user._id as string)
+        formData.append("owner", session?.user.username as string)
 
         console.log(JSON.stringify(data.organizers));
 

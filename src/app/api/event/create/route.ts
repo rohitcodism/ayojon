@@ -3,6 +3,7 @@ import eventModel from "@/models/event.model";
 import dbConnect from "@/lib/dbConnect";
 import Cloudinary from "@/lib/cloudinary";
 import mongoose from "mongoose";
+import UserModel from "@/models/user.model";
 
 async function createEvent(req: NextRequest) {
     await dbConnect();
@@ -56,7 +57,7 @@ async function createEvent(req: NextRequest) {
         }
 
 
-        if (!eventName || !description || !date || !location || !capacity || !category || !price || !speaker || !organizer) {
+        if (!eventName || !description || !date || !location || !capacity || !category || !price || !speaker || !organizer || !owner) {
             return NextResponse.json(
                 { message: "All fields are required" },
                 { status: 400 }
@@ -65,6 +66,10 @@ async function createEvent(req: NextRequest) {
 
         const priceN = Number(price)
         const capacityN = Number(capacity)
+
+        const creator = (await UserModel.findOne({username: owner}))?._id as string
+
+
 
 
         if (description.length < 40) {
@@ -93,7 +98,7 @@ async function createEvent(req: NextRequest) {
             banner: bannerUrl ? bannerUrl : "",
             speakers: eventSpeakers,
             organizers: eventOrganizers,
-            createdBy: owner
+            createdBy: new mongoose.Types.ObjectId(creator)
         });
 
         const savedEvent = await newEvent.save();
