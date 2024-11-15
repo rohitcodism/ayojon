@@ -69,7 +69,6 @@ const Step4 = () => {
         if (!selectedSpeakers.find((s) => s.id === speaker.id)) {
             speaker.username = speaker.username.toLowerCase();
             speaker.username = speaker.username.split(" ").join("");
-            console.log("speaker: ", speaker);
             const updatedSpeakers = [...selectedSpeakers, speaker];
             setSelectedSpeakers(updatedSpeakers);
             setValue("speakers", updatedSpeakers); // Update form field value
@@ -89,7 +88,6 @@ const Step4 = () => {
         if (!selectedOrganizers.find((s) => s.id === organizer.id)) {
             organizer.username = organizer.username.toLowerCase();
             organizer.username = organizer.username.split(" ").join("");
-            console.log("organizer: ", organizer);
             const updatedOrganizers = [...selectedOrganizers, organizer];
             setSelectedOrganizers(updatedOrganizers);
             setValue("organizers", updatedOrganizers); // Update form field value
@@ -163,7 +161,7 @@ const Step4 = () => {
                                         ))}
                                     </div>
                                 ) : null}
-                                {(speakerInputRef.current?.value !== "" && speakers.length === 0) ? (
+                                {(speakerInputRef.current?.value && speakers.length === 0) ? (
                                     <div className="absolute w-full bg-slate-900 text-white max-h-40 overflow-y-auto p-2 mt-2 rounded-md shadow-md z-10">
                                         <div className="py-2 px-4 text-gray-400">No user found</div>
                                     </div>
@@ -232,7 +230,7 @@ const Step4 = () => {
                                         ))}
                                     </div>
                                 ) : null}
-                                {( organizerInputRef.current?.value !== "" && organizers.length === 0) ? (
+                                {( organizerInputRef.current?.value && organizers.length === 0) ? (
                                     <div className="absolute w-full bg-slate-900 text-white max-h-40 overflow-y-auto p-2 mt-2 rounded-md shadow-md z-10">
                                         <div className="py-2 px-4 text-gray-400">No user found</div>
                                     </div>

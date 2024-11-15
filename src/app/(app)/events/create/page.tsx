@@ -49,8 +49,6 @@ const MultiStepForm = () => {
 
     const { data: session } = useSession();
 
-    console.log(session);
-
     const onSubmit: SubmitHandler<FormData> = async (data) => {
 
         const formData = new FormData();
@@ -65,8 +63,6 @@ const MultiStepForm = () => {
         formData.append("organizers", JSON.stringify(data.organizers) )
         formData.append("speakers", JSON.stringify(data.speakers) )
         formData.append("owner", session?.user.username as string)
-
-        console.log(JSON.stringify(data.organizers));
 
         if (data.banner != undefined) {
             formData.append("banner", data.banner);
