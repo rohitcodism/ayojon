@@ -5,7 +5,7 @@ import Link from 'next/link';
 export const CreateEvent = () => {
     return (
         <Link
-            href={"/create"}
+            href={"/events/create"}
         >
             <motion.button
                 whileHover={{

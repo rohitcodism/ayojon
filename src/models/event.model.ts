@@ -8,7 +8,7 @@ export interface Event extends Document {
     category: string,
     location: string,
     capacity: number,
-    createdBy: User,
+    createdBy: string,
     organizers: User[],
     speakers: User[]
 }
@@ -20,7 +20,7 @@ const eventSchema: Schema<Event> = new Schema({
     },
     description: {
         type: String,
-        minlength: 100,
+        minlength: 10,
         required: true,
     },
     category: {
@@ -54,8 +54,7 @@ const eventSchema: Schema<Event> = new Schema({
         }
     ],
     createdBy: {
-        type: SchemaTypes.ObjectId,
-        ref: "User",
+        type: String,
         required: true
     }
 },

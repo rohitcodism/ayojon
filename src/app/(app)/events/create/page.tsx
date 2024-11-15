@@ -17,11 +17,13 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Step5 } from "./(steps)/Step5/page";
+import { useSession } from "next-auth/react";
 
 // Define the form's data structure
 type FormData = z.infer<typeof eventSchema>;
 
 const MultiStepForm = () => {
+
     const methods = useForm<FormData>({
         resolver: zodResolver(eventSchema),
         defaultValues: {
@@ -33,8 +35,10 @@ const MultiStepForm = () => {
             capacity: '20',
             price: '0',
             banner: undefined,
+            organizers: [],
+            speakers: [],
+            owner: ""
         },
-        mode: "all", // Validate on every change
     });
 
     const { handleSubmit, formState: { isValid } } = methods;
@@ -43,9 +47,11 @@ const MultiStepForm = () => {
     const { toast } = useToast();
     const router = useRouter();
 
+    const { data: session } = useSession();
+
+    console.log(methods.getValues());
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
-        console.log("Final Data: ", data);
 
         const formData = new FormData();
 
@@ -56,6 +62,11 @@ const MultiStepForm = () => {
         formData.append("location", data.location )
         formData.append("capacity", data.capacity )
         formData.append("price", data.price )
+        formData.append("organizers", JSON.stringify(data.organizers) )
+        formData.append("speakers", JSON.stringify(data.speakers) )
+        formData.append("owner", session?.user._id as string)
+
+        console.log(JSON.stringify(data.organizers));
 
         if (data.banner != undefined) {
             formData.append("banner", data.banner);
@@ -65,7 +76,7 @@ const MultiStepForm = () => {
             setIsSubmitting(true);
             // API endpoint for event creation
 
-            const res = await axios.post('/api/event/create', data,{
+            const res = await axios.post('/api/event/create', formData,{
                 headers: {
                     "Content-Type": "multipart/form-data",
                 }
@@ -122,12 +133,12 @@ const MultiStepForm = () => {
                                 </Button>
                             )}
                             {currentStep < 6 && (
-                                <Button disabled={!isValid && currentStep !== 5} type="button" size={'lg'} onClick={nextStep}>
+                                <Button type="button" size={'lg'} onClick={nextStep}>
                                     Next
                                 </Button>
                             )}
                             {currentStep === 6 && (
-                                <Button type="submit" size={'lg'} disabled={!isValid}>
+                                <Button type="submit" size={'lg'}>
                                     {isSubmitting ? <Loader2 className="animate-spin" /> : "Create Event"}
                                 </Button>
                             )}

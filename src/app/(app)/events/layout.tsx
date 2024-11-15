@@ -14,7 +14,6 @@ export default function EventLayout(
     return (
         <SessionProvider>
             <div>
-                <Navbar />
                 {children}
             </div>
         </SessionProvider>

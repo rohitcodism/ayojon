@@ -15,8 +15,6 @@ export async function GET(req: NextRequest){
             identifier: searchParams.get('identifier')
         }
 
-        console.log(`Identifier: ${queryParam.identifier}`)
-
         const existingUser = await UserModel.find({
             $or:[
                 {username: { $regex:queryParam.identifier }},
@@ -36,14 +34,14 @@ export async function GET(req: NextRequest){
             )
         }
 
-        console.log(`Existing Users ${existingUser}`)
-
         return NextResponse.json(
             {
                 success: true,
                 data: existingUser.map((user) => {
                     return {
+                        id: user.id,
                         username: user.username,
+                        email: user.email,
                         profilePicture: user.profilePicture
                     }
                 })
@@ -54,7 +52,6 @@ export async function GET(req: NextRequest){
         )
 
     } catch (error) {
-        console.log(error)
         return NextResponse.json(
             {
                 success: false,

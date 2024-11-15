@@ -40,8 +40,8 @@ const eventSchema = z.object({
     capacity: z.string(),
     price: z.string(),
     //TODO: Work left on this
-    // organizers: z.array(userSchema).optional(),
-    // speakers: z.array(userSchema).optional(),
+    organizers: z.array(userSchema).optional(),
+    speakers: z.array(userSchema).optional(),
     banner: z.instanceof(File).optional().refine(
         (file) => {
             if(file){
@@ -52,6 +52,7 @@ const eventSchema = z.object({
         },
         {message: "Invalid file format or size!!"}
     ),
+    owner: z.string().optional()
 })
 
 export {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import eventModel from "@/models/event.model";
 import dbConnect from "@/lib/dbConnect";
 import Cloudinary from "@/lib/cloudinary";
+import mongoose from "mongoose";
 
 async function createEvent(req: NextRequest) {
     await dbConnect();
@@ -19,6 +20,11 @@ async function createEvent(req: NextRequest) {
         const category = formData.get("category") as string;
         const banner = formData.get("banner") as File | undefined;
         const owner = formData.get("owner") as string;
+        const speaker = formData.get("speakers") as string;
+        const organizer = formData.get("organizers") as string;
+
+        const eventSpeakers = JSON.parse(speaker).map((s: any) => new mongoose.Types.ObjectId(s.id))
+        const eventOrganizers = JSON.parse(speaker).map((o: any) => new mongoose.Types.ObjectId(o.id))
 
         let bannerUrl = "";
 
@@ -50,7 +56,7 @@ async function createEvent(req: NextRequest) {
         }
 
 
-        if (!eventName || !description || !date || !location || !capacity || !category || !price) {
+        if (!eventName || !description || !date || !location || !capacity || !category || !price || !speaker || !organizer) {
             return NextResponse.json(
                 { message: "All fields are required" },
                 { status: 400 }
@@ -85,6 +91,8 @@ async function createEvent(req: NextRequest) {
             price: priceN,
             capacity: capacityN,
             banner: bannerUrl ? bannerUrl : "",
+            speakers: eventSpeakers,
+            organizers: eventOrganizers,
             createdBy: owner
         });
 

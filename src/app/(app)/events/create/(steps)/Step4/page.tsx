@@ -18,21 +18,15 @@ import Image from "next/image";
 import { Speaker, Building2, X } from "lucide-react"; // Organizers icon
 
 const Step4 = () => {
-    const { register, setValue } = useFormContext();
+    const { setValue } = useFormContext();
 
     // State for Speakers
-    const [speakerSearch, setSpeakerSearch] = useState<string>("");
     const [speakers, setSpeakers] = useState<User[]>([]);
     const [selectedSpeakers, setSelectedSpeakers] = useState<User[]>([]);
 
     // State for Organizers
-    const [organizerSearch, setOrganizerSearch] = useState<string>("");
     const [organizers, setOrganizers] = useState<User[]>([]);
     const [selectedOrganizers, setSelectedOrganizers] = useState<User[]>([]);
-
-    // Cancel tokens for fetching speakers and organizers
-    const speakerCancelToken = axios.CancelToken.source();
-    const organizerCancelToken = axios.CancelToken.source();
 
     // Input Element Reference
     const speakerInputRef = React.useRef<HTMLInputElement>(null);
@@ -43,17 +37,13 @@ const Step4 = () => {
 
         console.log("searchTerm: ", searchTerm);
 
-        if (searchTerm.length > 1) {
+        if (searchTerm.length >= 1) {
             try {
                 const res = await axios.get(`/api/searchUser/?identifier=${searchTerm}`);
                 console.log("res: ", res.data.data);
                 setSpeakers(res.data.data);
             } catch (error) {
-                if (axios.isCancel(error)) {
-                    console.log("Previous speaker search request cancelled");
-                } else {
-                    console.error(error);
-                }
+                console.error(error);
             }
         } else {
             setSpeakers([]);
@@ -62,18 +52,12 @@ const Step4 = () => {
 
     // Debounced function for fetching organizers
     const fetchOrganizers = useDebounceCallback(async (searchTerm: string) => {
-        if (searchTerm.length > 1) {
+        if (searchTerm.length >= 1) {
             try {
-                const res = await axios.get(`/api/searchUser/?identifier=${searchTerm}`, {
-                    cancelToken: organizerCancelToken.token,
-                });
+                const res = await axios.get(`/api/searchUser/?identifier=${searchTerm}`);
                 setOrganizers(res.data.data);
             } catch (error) {
-                if (axios.isCancel(error)) {
-                    console.log("Previous organizer search request cancelled");
-                } else {
-                    console.error(error);
-                }
+                console.error(error);
             }
         } else {
             setOrganizers([]);
@@ -83,6 +67,9 @@ const Step4 = () => {
     // Handle Speaker Selection
     const handleSpeakerSelect = (speaker: User) => {
         if (!selectedSpeakers.find((s) => s.id === speaker.id)) {
+            speaker.username = speaker.username.toLowerCase();
+            speaker.username = speaker.username.split(" ").join("");
+            console.log("speaker: ", speaker);
             const updatedSpeakers = [...selectedSpeakers, speaker];
             setSelectedSpeakers(updatedSpeakers);
             setValue("speakers", updatedSpeakers); // Update form field value
@@ -100,6 +87,9 @@ const Step4 = () => {
     // Handle Organizer Selection
     const handleOrganizerSelect = (organizer: User) => {
         if (!selectedOrganizers.find((s) => s.id === organizer.id)) {
+            organizer.username = organizer.username.toLowerCase();
+            organizer.username = organizer.username.split(" ").join("");
+            console.log("organizer: ", organizer);
             const updatedOrganizers = [...selectedOrganizers, organizer];
             setSelectedOrganizers(updatedOrganizers);
             setValue("organizers", updatedOrganizers); // Update form field value
@@ -147,7 +137,6 @@ const Step4 = () => {
                                         </Badge>
                                     ))}
                                     <input
-                                        {...register("speakers")}
                                         ref={speakerInputRef}
                                         className="flex-1 border-none focus:outline-none bg-slate-950 dark:bg-gray-700 rounded-md px-2"
                                         placeholder="Search for speakers & guests..."
@@ -217,7 +206,6 @@ const Step4 = () => {
                                         </Badge>
                                     ))}
                                     <input
-                                        {...register("organizers")}
                                         ref={organizerInputRef}
                                         className="flex-1 border-none focus:outline-none bg-slate-950 dark:bg-gray-700 rounded-md px-2"
                                         placeholder="Search for organizers..."
