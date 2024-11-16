@@ -67,13 +67,16 @@ export const authOptions : NextAuthOptions = {
             if(account?.provider === 'google'){
                 await dbConnect();
 
+                console.log(profile);
+
                 const existingUser = await UserModel.findOne({
                     email: profile?.email
                 })
 
                 if(!existingUser){
                     const newUser = new UserModel({
-                        username: profile?.name?.split(" ")[0] || profile?.email?.split('@')[0],
+                        username: profile?.name?.split(" ")[0].toLowerCase() || profile?.email?.split('@')[0],
+                        fullname: profile?.name,
                         email: profile?.email,
                         password: null,
                         verifyCode: null,
@@ -92,12 +95,14 @@ export const authOptions : NextAuthOptions = {
             if(user){
                 token._id = user._id?.toString();
                 token.username = user.username;
+                token.picture = user.profilePicture
             }
 
             if(account && account.provider === 'google'){
                 token._id = token.sub,
                 token.username = profile?.name || profile?.email?.split('@')[0],
                 token.isVerified = true
+                token.picture = profile?.picture
             }
 
             return token;
@@ -108,6 +113,7 @@ export const authOptions : NextAuthOptions = {
                 session.user._id = token._id;
                 session.user.username = token.username;
                 session.user.isVerified = token.isVerified;
+                session.user.profilePicture = token.picture || "";
             }
 
             return session;
