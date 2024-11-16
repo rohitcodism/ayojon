@@ -16,18 +16,20 @@ export const UserAvatar = () => {
 
     const { data: session,status } = useSession();
 
+    console.log(session?.user.profilePicture);
+
     return (
         <div className="flex justify-center items-center">
             <DropdownMenu>
                 <DropdownMenuTrigger>
                     <Avatar className="w-10 h-10">
-                        <AvatarImage src={session?.user?.image || "https://github.com/shadcn.png"} />
-                        <AvatarFallback>{session?.user.name}</AvatarFallback>
+                        <AvatarImage src={session?.user.profilePicture || "https://github.com/shadcn.png"} />
+                        <AvatarFallback>{session?.user.name?.charAt(0)}</AvatarFallback>
                     </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-black">
                     <DropdownMenuItem className="cursor-pointer focus:bg-white/20">Profile</DropdownMenuItem>
-                    <DropdownMenuItem className="flex items-center gap-4 cursor-pointer focus:bg-white/20 focus:text-red-700" onClick={() => signOut()}>Log out <LogOut size={15} /></DropdownMenuItem>
+                    <DropdownMenuItem className="flex items-center gap-4 cursor-pointer focus:bg-white/20 focus:text-red-700" onClick={() => signOut({ callbackUrl: "/" })}>Log out <LogOut size={15} /></DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
