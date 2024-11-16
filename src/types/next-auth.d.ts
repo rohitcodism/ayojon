@@ -5,18 +5,21 @@ declare module 'next-auth' {
     interface Profile {
         _id?: string,
         username?: string,
-        isVerified?: boolean
+        isVerified?: boolean,
+        picture: string | undefined
     }
     interface User {
         _id?: string,
         username?: string,
-        isVerified?: boolean
+        isVerified?: boolean,
+        profilePicture: string | undefined
     }
     interface Session {
         user: {
             _id?: string,
             username?: string,
-            isVerified?: boolean
+            isVerified?: boolean,
+            profilePicture: string | undefined
         } & DefaultSession['user']
     }
 }
@@ -25,12 +28,6 @@ declare module 'next-auth/jwt' {
     interface JWT {
         _id?: string,
         username?: string,
-        isVerified?: boolean
-    }
-}
-
-declare module 'next-auth'{
-    interface Profile {
-        picture: string | undefined
+        isVerified?: boolean,
     }
 }
