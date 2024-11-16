@@ -5,18 +5,23 @@ import { User } from "./user.model";
 
 
 export interface Speaker extends Document {
-    addedBy: User,
-    event: Event
+    userId: User,
+    event: Event,
+    addedBy: User
 }
 
 const speakerSchema: Schema<Speaker> = new Schema({
-    addedBy: {
+    userId: {
         type: SchemaTypes.ObjectId,
         ref: "User"
     },
     event: {
         type: SchemaTypes.ObjectId,
         ref: "Event"
+    },
+    addedBy: {
+        type: SchemaTypes.ObjectId,
+        ref: "User"
     }
 })
 

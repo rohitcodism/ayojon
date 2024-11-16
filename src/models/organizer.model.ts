@@ -5,18 +5,23 @@ import { User } from "./user.model";
 
 
 export interface Organizer extends Document {
-    addedBy: User,
-    event: Event
+    userId: User,
+    event: Event,
+    addedBy: User
 }
 
 const organizerSchema: Schema<Organizer> =  new Schema({
-    addedBy: {
+    userId: {
         type: SchemaTypes.ObjectId,
         ref: "User"
     },
     event: {
         type: SchemaTypes.ObjectId,
         ref: "Event"
+    },
+    addedBy: {
+        type: SchemaTypes.ObjectId,
+        ref: "User"
     }
 })
 
