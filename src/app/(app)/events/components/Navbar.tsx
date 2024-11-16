@@ -5,10 +5,14 @@ import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion'
 import { CreateEvent } from "./createEvent";
 import { UserAvatar } from "@/app/components/UserAvatar";
+import { useSession } from "next-auth/react";
 
 
 
 export const Navbar = () => {
+
+    const { status } = useSession();
+
     return (
         <nav className="py-6 bg-white shadow-md dark:bg-black">
             <div className="flex container gap-8 items-center w-full dark:bg-black">
@@ -17,7 +21,9 @@ export const Navbar = () => {
                 </div>
                 <SearchBox />
                 <CreateEvent />
-                <UserAvatar />
+                {
+                    status === 'authenticated' ? (<UserAvatar />)  : (<Link href={"/signup"}><Button className='rounded-lg'>Sign up</Button></Link>)
+                }
             </div>
         </nav>
     );
