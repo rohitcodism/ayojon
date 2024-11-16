@@ -3,6 +3,7 @@ import { FeaturedEventCard } from "@/app/components/FeaturedEventCard"
 import { FeaturedEvent, featuredEvents } from "../../../../../constants"
 import { Categories } from "./Categories"
 import { useGlobalContext } from "../../../../../context/GlobalContext"
+import { FeaturedCarousel } from "./FeaturedCarousel"
 
 //TODO: Fix the categorization!!
 
@@ -12,15 +13,15 @@ export const EventPage = () => {
 
     let listedEvents: FeaturedEvent[] | null = null;
 
-    if(selectedEventCategory){
-        if(selectedEventCategory == "All"){
-            listedEvents=featuredEvents;
-        }else{
+    if (selectedEventCategory) {
+        if (selectedEventCategory == "All") {
+            listedEvents = featuredEvents;
+        } else {
             listedEvents = featuredEvents.filter((event) => event.category === selectedEventCategory);
         }
-    }else if(ddmCategory){
+    } else if (ddmCategory) {
         listedEvents = featuredEvents.filter((event) => event.category === ddmCategory);
-    }else if(!selectedEventCategory || !ddmCategory){
+    } else if (!selectedEventCategory || !ddmCategory) {
         listedEvents = featuredEvents;
     }
 
@@ -31,20 +32,21 @@ export const EventPage = () => {
         bg-white
         w-full
         min-h-screen
+        pb-8
     "
         >
             <div className="container py-8 flex flex-col gap-6">
-                <div
-                    className="flex justify-between items-center"
-                >
-                    <h1
-                        className="
-            text-3xl
-            font-bold
-        "
+                <div>
+                    <div
+                        className="flex flex-col gap-4 py-2"
                     >
-                        Events
-                    </h1>
+                        <h1
+                            className="text-4xl font-extrabold"
+                        >
+                            Featured
+                        </h1>
+                        <FeaturedCarousel />
+                    </div>
                 </div>
                 <Categories />
             </div>
