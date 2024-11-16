@@ -4,6 +4,8 @@ import dbConnect from "@/lib/dbConnect";
 import Cloudinary from "@/lib/cloudinary";
 import mongoose from "mongoose";
 import UserModel from "@/models/user.model";
+import SpeakerModel from "@/models/speaker.model";
+import OrganizerModel from "@/models/organizer.model";
 
 async function createEvent(req: NextRequest) {
     await dbConnect();
@@ -25,7 +27,9 @@ async function createEvent(req: NextRequest) {
         const organizer = formData.get("organizers") as string;
 
         const eventSpeakers = JSON.parse(speaker).map((s: any) => new mongoose.Types.ObjectId(s.id))
-        const eventOrganizers = JSON.parse(speaker).map((o: any) => new mongoose.Types.ObjectId(o.id))
+        const eventOrganizers = JSON.parse(organizer).map((o: any) => new mongoose.Types.ObjectId(o.id))
+
+
 
         let bannerUrl = "";
 
@@ -101,7 +105,29 @@ async function createEvent(req: NextRequest) {
             createdBy: new mongoose.Types.ObjectId(creator)
         });
 
+        //Save event
         const savedEvent = await newEvent.save();
+
+        //Add speakers and organizers
+        eventSpeakers.map(async (s: any) => {
+            const newSpeaker = new SpeakerModel({
+                userId: s,
+                event: savedEvent._id,
+                addedBy: creator
+            })
+
+            await newSpeaker.save()
+        })
+
+        eventOrganizers.map(async (o: any) => {
+            const newOrganizer = new OrganizerModel({
+                userId: o,
+                event: savedEvent._id,
+                addedBy: creator
+            })
+
+            await newOrganizer.save()
+        })
 
         return NextResponse.json(savedEvent, { status: 201 });
     } catch (error: any) {
