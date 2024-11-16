@@ -16,8 +16,6 @@ export const UserAvatar = () => {
 
     const { data: session,status } = useSession();
 
-    console.log(session?.user.profilePicture);
-
     return (
         <div className="flex justify-center items-center">
             <DropdownMenu>
