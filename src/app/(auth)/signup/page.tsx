@@ -232,7 +232,7 @@ const SignUp = () => {
                         </Button>
                     </form>
                     <div className="flex flex-col justify-center items-center py-2 gap-2">
-                        <Button size={"lg"} className="self-center w-full cursor-pointer dark:bg-blue-600 dark:text-white" onClick={() => signIn("google")}>
+                        <Button size={"lg"} className="self-center w-full cursor-pointer dark:bg-blue-600 dark:text-white" onClick={() => signIn("google", { callbackUrl: "/" })}>
                             <div className="flex justify-center items-center gap-4">Sign up with Google <Image src={GoogleIcon} alt="google-icon" height={20} width={20} /></div>
                         </Button>
                         <Link href={"/login"}>
