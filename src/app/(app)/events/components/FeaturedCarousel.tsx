@@ -7,74 +7,49 @@ import {
 } from "@/components/ui/carousel";
 import { featuredEvents } from "../../../../../constants";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 export const FeaturedCarousel = () => {
     const totalEvents = featuredEvents.length;
-    const [currentIndex, setCurrentIndex] = useState(totalEvents); // Start in the duplicated middle set
-    const transitionRef = useRef(true); // Control smooth transitions
 
-    // Handle auto-slide every 5 seconds
-    useEffect(() => {
-        const interval = setInterval(() => {
-            slideToNext();
-        }, 5000); // Adjust the interval duration
+    // Duplicate featured events for infinite looping
+    const infiniteEvents = [...featuredEvents, ...featuredEvents];
 
-        return () => clearInterval(interval); // Cleanup on unmount
-    }, [currentIndex]);
+    const [currentIndex, setCurrentIndex] = useState(totalEvents); // Start at the first duplicate
+    const [isTransitioning, setIsTransitioning] = useState(true); // Controls smooth transition
 
-    // Smooth slide to the next
+    // Slide to the next item
     const slideToNext = () => {
         setCurrentIndex((prevIndex) => prevIndex + 1);
     };
 
-    // Smooth slide to the previous
+    // Slide to the previous item
     const slideToPrev = () => {
         setCurrentIndex((prevIndex) => prevIndex - 1);
     };
 
-    // Adjust carousel to create the infinite effect
+    // Auto-slide every 5 seconds
     useEffect(() => {
-        if (!transitionRef.current) {
-            return;
-        }
+        const interval = setInterval(slideToNext, 5000);
+        return () => clearInterval(interval);
+    }, []);
 
-        const handleTransitionEnd = () => {
-            // Reset index without animation when sliding out of bounds
-            if (currentIndex === totalEvents * 2) {
-                transitionRef.current = false;
-                setCurrentIndex(totalEvents);
-            } else if (currentIndex === totalEvents - 1) {
-                transitionRef.current = false;
-                setCurrentIndex(totalEvents * 2 - 1);
-            }
-        };
-
-        document
-            .querySelector(".carousel-content") // Select the sliding container
-            ?.addEventListener("transitionend", handleTransitionEnd);
-
-        return () => {
-            document
-                .querySelector(".carousel-content")
-                ?.removeEventListener("transitionend", handleTransitionEnd);
-        };
-    }, [currentIndex, totalEvents]);
-
-    // Enable smooth transition after resetting
+    // Reset position without animation when out of bounds
     useEffect(() => {
-        if (!transitionRef.current) {
+        if (currentIndex === totalEvents * 2) {
             setTimeout(() => {
-                transitionRef.current = true;
-            }, 50); // Small delay before re-enabling transitions
+                setIsTransitioning(false);
+                setCurrentIndex(totalEvents); // Reset to the start of the original duplicate set
+            }, 500); // Match transition duration
+        } else if (currentIndex === totalEvents - 1) {
+            setTimeout(() => {
+                setIsTransitioning(false);
+                setCurrentIndex(totalEvents * 2 - 1); // Reset to the end of the original duplicate set
+            }, 500);
+        } else {
+            setIsTransitioning(true);
         }
-    }, [currentIndex]);
-
-    // Get the carousel content
-    const infiniteEvents = [
-        ...featuredEvents, // Duplicate for looping
-        ...featuredEvents,
-    ];
+    }, [currentIndex, totalEvents]);
 
     return (
         <div className="h-[500px] w-full py-4 relative overflow-hidden">
@@ -83,14 +58,12 @@ export const FeaturedCarousel = () => {
                     className="flex transition-transform duration-500 ease-in-out"
                     style={{
                         transform: `translateX(-${(currentIndex - totalEvents) * 100}%)`,
-                        transition: transitionRef.current ? "transform 0.5s ease-in-out" : "none",
+                        transition: isTransitioning ? "transform 0.5s ease-in-out" : "none",
                     }}
                 >
                     {infiniteEvents.map((event, index) => (
                         <CarouselItem key={index} className="w-full flex justify-center items-center">
-                            {/* Event Card */}
                             <div className="relative w-[100%] h-[400px] rounded-lg shadow-lg overflow-hidden">
-                                {/* Event Background Image */}
                                 <Image
                                     src={event.image}
                                     alt={event.name}
@@ -98,9 +71,7 @@ export const FeaturedCarousel = () => {
                                     objectFit="cover"
                                     priority
                                 />
-                                {/* Gradient Overlay */}
                                 <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-                                {/* Event Info */}
                                 <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/60 to-transparent p-4 text-white">
                                     <h3 className="text-lg font-bold">{event.name}</h3>
                                     <p className="text-sm line-clamp-2">{event.category}</p>
@@ -109,7 +80,8 @@ export const FeaturedCarousel = () => {
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-                {/* Prev and Next Buttons */}
+
+                {/* Navigation Buttons */}
                 <CarouselPrevious
                     className="absolute left-2 top-1/2 transform -translate-y-1/2"
                     onClick={slideToPrev}

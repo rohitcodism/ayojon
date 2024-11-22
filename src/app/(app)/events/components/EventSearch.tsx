@@ -46,27 +46,30 @@ export const SearchBox = () => {
     }, [debouncedSearchKeyword]);
 
     return (
-        <div className="container flex flex-col justify-center items-center max-h-[700px]">
-            <div className="relative max-w-[500px] w-full">
+        <div className="container flex flex-col justify-center items-center max-h-[700px] flex-[0.7]">
+            <div className="relative  w-full">
                 <Input
                     type="text"
                     placeholder="Search for an upcoming event"
                     className="
                         w-full
-                        bg-black
+                        bg-white
+                        border-black
+                        text-black
+                        dark:bg-black
                         border-[1px]
-                        border-white
+                        dark:border-white
                         px-4
                         py-2
                         rounded-full
                         outline-none
-                        text-white
+                        dark:text-white
                         text-sm
                     "
                     style={{ outline: 'none', boxShadow: 'none' }}
                     onChange={(e) => setSearchKeyWord(e.target.value)}
                 />
-                <Search size={20} className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white" />
+                <Search size={20} className="absolute right-4 top-1/2 transform -translate-y-1/2 dark:text-white text-black" />
 
                 {searchKeyword && (
                     <div
